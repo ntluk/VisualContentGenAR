@@ -1,0 +1,688 @@
+{
+  "4": {
+    "inputs": {
+      "model_name": "hunyuan3d-vae-v2-1.ckpt"
+    },
+    "class_type": "Hy3D21VAELoader",
+    "_meta": {
+      "title": "Hunyuan 3D 2.1 VAE Loader"
+    }
+  },
+  "9": {
+    "inputs": {
+      "box_v": 1.01,
+      "octree_resolution": 256,
+      "num_chunks": 64000,
+      "mc_level": 0,
+      "mc_algo": "mc",
+      "enable_flash_vdm": true,
+      "force_offload": false,
+      "vae": [
+        "4",
+        0
+      ],
+      "latents": [
+        "37",
+        0
+      ]
+    },
+    "class_type": "Hy3D21VAEDecode",
+    "_meta": {
+      "title": "Hunyuan 3D 2.1 VAE Decoder"
+    }
+  },
+  "19": {
+    "inputs": {
+      "camera_azimuths": "0, 90, 180, 270, 0, 180",
+      "camera_elevations": "0, 0, 0, 0, 90, -90",
+      "view_weights": "1, 0.5, 1, 0.5, 1, 1",
+      "ortho_scale": 1.1000000000000003
+    },
+    "class_type": "Hy3D21CameraConfig",
+    "_meta": {
+      "title": "Hunyuan 3D 2.1 Camera Config"
+    }
+  },
+  "20": {
+    "inputs": {
+      "view_size": 768,
+      "steps": 5,
+      "guidance_scale": 3,
+      "texture_size": 512,
+      "unwrap_mesh": false,
+      "seed": 708867650624537,
+      "trimesh": [
+        "45",
+        0
+      ],
+      "camera_config": [
+        "19",
+        0
+      ],
+      "image": [
+        "61",
+        0
+      ]
+    },
+    "class_type": "Hy3DMultiViewsGenerator",
+    "_meta": {
+      "title": "Hunyuan 3D 2.1 MultiViews Generator"
+    }
+  },
+  "21": {
+    "inputs": {
+      "pipeline": [
+        "20",
+        0
+      ],
+      "camera_config": [
+        "19",
+        0
+      ],
+      "albedo": [
+        "20",
+        1
+      ],
+      "mr": [
+        "20",
+        2
+      ]
+    },
+    "class_type": "Hy3DBakeMultiViews",
+    "_meta": {
+      "title": "Hunyuan 3D 2.1 Bake MultiViews"
+    }
+  },
+  "27": {
+    "inputs": {
+      "model_file": [
+        "49",
+        3
+      ],
+      "image": ""
+    },
+    "class_type": "Preview3D",
+    "_meta": {
+      "title": "Preview 3D"
+    }
+  },
+  "30": {
+    "inputs": {
+      "value": 200000
+    },
+    "class_type": "INTConstant",
+    "_meta": {
+      "title": "INT Constant"
+    }
+  },
+  "32": {
+    "inputs": {
+      "string": "Hy21_Mesh"
+    },
+    "class_type": "StringConstant",
+    "_meta": {
+      "title": "String Constant"
+    }
+  },
+  "37": {
+    "inputs": {
+      "model": "hunyuan3d-dit-v2-1.ckpt",
+      "steps": 25,
+      "guidance_scale": 7.5,
+      "seed": 963793338411105,
+      "attention_mode": "sdpa",
+      "image": [
+        "61",
+        0
+      ]
+    },
+    "class_type": "Hy3DMeshGenerator",
+    "_meta": {
+      "title": "Hunyuan 3D 2.1 Mesh Generator"
+    }
+  },
+  "43": {
+    "inputs": {
+      "remove_floaters": true,
+      "remove_degenerate_faces": true,
+      "reduce_faces": true,
+      "max_facenum": [
+        "30",
+        0
+      ],
+      "smooth_normals": false,
+      "trimesh": [
+        "9",
+        0
+      ]
+    },
+    "class_type": "Hy3D21PostprocessMesh",
+    "_meta": {
+      "title": "Hunyuan 3D 2.1 Post Process Trimesh"
+    }
+  },
+  "44": {
+    "inputs": {
+      "filename_prefix": [
+        "32",
+        0
+      ],
+      "file_format": "glb",
+      "save_file": false,
+      "trimesh": [
+        "43",
+        0
+      ]
+    },
+    "class_type": "Hy3D21ExportMesh",
+    "_meta": {
+      "title": "Hunyuan 3D 2.1 Export Mesh"
+    }
+  },
+  "45": {
+    "inputs": {
+      "trimesh": [
+        "43",
+        0
+      ]
+    },
+    "class_type": "Hy3D21MeshUVWrap",
+    "_meta": {
+      "title": "Hunyuan 3D 2.1 Mesh UV Wrap"
+    }
+  },
+  "46": {
+    "inputs": {
+      "filename_prefix": "MV",
+      "images": [
+        "20",
+        1
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "49": {
+    "inputs": {
+      "output_mesh_name": [
+        "32",
+        0
+      ],
+      "pipeline": [
+        "21",
+        0
+      ],
+      "albedo": [
+        "21",
+        1
+      ],
+      "albedo_mask": [
+        "21",
+        2
+      ],
+      "mr": [
+        "21",
+        3
+      ],
+      "mr_mask": [
+        "21",
+        4
+      ]
+    },
+    "class_type": "Hy3DInPaint",
+    "_meta": {
+      "title": "Hunyuan 3D 2.1 InPaint"
+    }
+  },
+  "50": {
+    "inputs": {
+      "images": [
+        "49",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "51": {
+    "inputs": {
+      "images": [
+        "49",
+        1
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "61": {
+    "inputs": {
+      "width": 512,
+      "height": 512,
+      "upscale_method": "nearest-exact",
+      "keep_proportion": "resize",
+      "pad_color": "0, 0, 0",
+      "crop_position": "center",
+      "divisible_by": 2,
+      "device": "cpu",
+      "image": [
+        "133",
+        0
+      ]
+    },
+    "class_type": "ImageResizeKJv2",
+    "_meta": {
+      "title": "Resize Image v2"
+    }
+  },
+  "112": {
+    "inputs": {
+      "model": "sam2_hiera_base_plus.safetensors",
+      "segmentor": "single_image",
+      "device": "cuda",
+      "precision": "bf16"
+    },
+    "class_type": "DownloadAndLoadSAM2Model",
+    "_meta": {
+      "title": "(Down)Load SAM2Model"
+    }
+  },
+  "113": {
+    "inputs": {
+      "image": "1_kI_cbCh6HYSMUqfFAHtK1Q.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "114": {
+    "inputs": {
+      "keep_model_loaded": "",
+      "individual_objects": true,
+      "sam2_model": [
+        "112",
+        0
+      ],
+      "image": [
+        "113",
+        0
+      ],
+      "coordinates_positive": [
+        "115",
+        0
+      ]
+    },
+    "class_type": "Sam2Segmentation",
+    "_meta": {
+      "title": "Sam2Segmentation"
+    }
+  },
+  "115": {
+    "inputs": {
+      "points_store": "{\"positive\":[{\"x\":650.9089606814039,\"y\":801.2709090454972}],\"negative\":[{\"x\":0,\"y\":0}]}",
+      "coordinates": "[{\"x\":650.9089606814039,\"y\":801.2709090454972}]",
+      "neg_coordinates": "[{\"x\":0,\"y\":0}]",
+      "bbox_store": "[{}]",
+      "bboxes": "[{}]",
+      "bbox_format": "xyxy",
+      "width": 1400,
+      "height": 1064,
+      "normalize": false,
+      "New canvas": null,
+      "bg_image": [
+        "113",
+        0
+      ]
+    },
+    "class_type": "PointsEditor",
+    "_meta": {
+      "title": "Points Editor"
+    }
+  },
+  "116": {
+    "inputs": {
+      "mask_opacity": 1,
+      "mask_color": "77, 77, 255",
+      "pass_through": true,
+      "image": [
+        "113",
+        0
+      ],
+      "mask": [
+        "114",
+        0
+      ]
+    },
+    "class_type": "ImageAndMaskPreview",
+    "_meta": {
+      "title": "ImageAndMaskPreview"
+    }
+  },
+  "117": {
+    "inputs": {
+      "base_resolution": 512,
+      "padding": 0,
+      "min_crop_resolution": 344,
+      "max_crop_resolution": 512,
+      "image": [
+        "113",
+        0
+      ],
+      "mask": [
+        "114",
+        0
+      ]
+    },
+    "class_type": "ImageCropByMaskAndResize",
+    "_meta": {
+      "title": "Image Crop By Mask And Resize"
+    }
+  },
+  "118": {
+    "inputs": {
+      "mask_opacity": 1,
+      "mask_color": "77, 77, 255",
+      "pass_through": true,
+      "image": [
+        "113",
+        0
+      ],
+      "mask": [
+        "119",
+        0
+      ]
+    },
+    "class_type": "ImageAndMaskPreview",
+    "_meta": {
+      "title": "ImageAndMaskPreview"
+    }
+  },
+  "119": {
+    "inputs": {
+      "mask": [
+        "114",
+        0
+      ]
+    },
+    "class_type": "InvertMask",
+    "_meta": {
+      "title": "InvertMask"
+    }
+  },
+  "120": {
+    "inputs": {
+      "transparency": true,
+      "model": "silueta",
+      "post_processing": false,
+      "only_mask": false,
+      "alpha_matting": false,
+      "alpha_matting_foreground_threshold": 240,
+      "alpha_matting_background_threshold": 10,
+      "alpha_matting_erode_size": 10,
+      "background_color": "none",
+      "images": [
+        "118",
+        0
+      ]
+    },
+    "class_type": "Image Rembg (Remove Background)",
+    "_meta": {
+      "title": "Image Rembg (Remove Background)"
+    }
+  },
+  "121": {
+    "inputs": {
+      "mask": [
+        "117",
+        1
+      ]
+    },
+    "class_type": "InvertMask",
+    "_meta": {
+      "title": "InvertMask"
+    }
+  },
+  "122": {
+    "inputs": {
+      "mask_opacity": 1,
+      "mask_color": "77, 77, 255",
+      "pass_through": true,
+      "image": [
+        "117",
+        0
+      ],
+      "mask": [
+        "121",
+        0
+      ]
+    },
+    "class_type": "ImageAndMaskPreview",
+    "_meta": {
+      "title": "ImageAndMaskPreview"
+    }
+  },
+  "123": {
+    "inputs": {
+      "frame_rate": 30,
+      "loop_count": 0,
+      "filename_prefix": "AnimateDiff",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": false,
+      "images": [
+        "116",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "124": {
+    "inputs": {
+      "frame_rate": 30,
+      "loop_count": 0,
+      "filename_prefix": "Selection",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": false,
+      "images": [
+        "120",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "125": {
+    "inputs": {
+      "padding": 24,
+      "region_type": "dominant",
+      "mask": [
+        "114",
+        0
+      ]
+    },
+    "class_type": "Mask Crop Region",
+    "_meta": {
+      "title": "Mask Crop Region"
+    }
+  },
+  "126": {
+    "inputs": {
+      "mask": [
+        "125",
+        0
+      ]
+    },
+    "class_type": "InvertMask",
+    "_meta": {
+      "title": "InvertMask"
+    }
+  },
+  "127": {
+    "inputs": {
+      "mask": [
+        "126",
+        0
+      ]
+    },
+    "class_type": "MaskPreview+",
+    "_meta": {
+      "title": "🔧 Mask Preview"
+    }
+  },
+  "128": {
+    "inputs": {
+      "frame_rate": 30,
+      "loop_count": 0,
+      "filename_prefix": "Selection",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": false,
+      "images": [
+        "122",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "129": {
+    "inputs": {
+      "frame_rate": 30,
+      "loop_count": 0,
+      "filename_prefix": "AnimateDiff",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": false,
+      "images": [
+        "131",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "130": {
+    "inputs": {
+      "frame_rate": 30,
+      "loop_count": 0,
+      "filename_prefix": "AnimateDiff",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": false,
+      "images": [
+        "133",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "131": {
+    "inputs": {
+      "upscale_model": [
+        "132",
+        0
+      ],
+      "image": [
+        "122",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "Upscale Image (using Model)"
+    }
+  },
+  "132": {
+    "inputs": {
+      "model_name": "4x-UltraSharp.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model"
+    }
+  },
+  "133": {
+    "inputs": {
+      "transparency": true,
+      "model": "silueta",
+      "post_processing": false,
+      "only_mask": false,
+      "alpha_matting": false,
+      "alpha_matting_foreground_threshold": 240,
+      "alpha_matting_background_threshold": 10,
+      "alpha_matting_erode_size": 10,
+      "background_color": "none",
+      "images": [
+        "131",
+        0
+      ]
+    },
+    "class_type": "Image Rembg (Remove Background)",
+    "_meta": {
+      "title": "Image Rembg (Remove Background)"
+    }
+  },
+  "134": {
+    "inputs": {
+      "mask": [
+        "126",
+        0
+      ]
+    },
+    "class_type": "MaskToImage",
+    "_meta": {
+      "title": "Convert Mask to Image"
+    }
+  },
+  "135": {
+    "inputs": {
+      "images": [
+        "134",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  }
+}

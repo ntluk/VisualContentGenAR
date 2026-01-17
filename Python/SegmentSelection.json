@@ -1,0 +1,194 @@
+{
+  "10": {
+    "inputs": {
+      "keep_model_loaded": "",
+      "individual_objects": true,
+      "sam2_model": [
+        "11",
+        0
+      ],
+      "image": [
+        "12",
+        0
+      ],
+      "coordinates_positive": [
+        "38",
+        0
+      ]
+    },
+    "class_type": "Sam2Segmentation",
+    "_meta": {
+      "title": "Sam2Segmentation"
+    }
+  },
+  "11": {
+    "inputs": {
+      "model": "sam2_hiera_base_plus.safetensors",
+      "segmentor": "video",
+      "device": "cuda",
+      "precision": "bf16"
+    },
+    "class_type": "DownloadAndLoadSAM2Model",
+    "_meta": {
+      "title": "(Down)Load SAM2Model"
+    }
+  },
+  "12": {
+    "inputs": {
+      "image": "Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "18": {
+    "inputs": {
+      "mask_opacity": 1,
+      "mask_color": "77, 77, 255",
+      "pass_through": true,
+      "image": [
+        "12",
+        0
+      ],
+      "mask": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "ImageAndMaskPreview",
+    "_meta": {
+      "title": "ImageAndMaskPreview"
+    }
+  },
+  "23": {
+    "inputs": {
+      "frame_rate": 30,
+      "loop_count": 0,
+      "filename_prefix": "AnimateDiff",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": false,
+      "images": [
+        "18",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "26": {
+    "inputs": {
+      "mask": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "MaskPreview+",
+    "_meta": {
+      "title": "🔧 Mask Preview"
+    }
+  },
+  "28": {
+    "inputs": {
+      "mask_opacity": 1,
+      "mask_color": "77, 77, 255",
+      "pass_through": true,
+      "image": [
+        "12",
+        0
+      ],
+      "mask": [
+        "32",
+        0
+      ]
+    },
+    "class_type": "ImageAndMaskPreview",
+    "_meta": {
+      "title": "ImageAndMaskPreview"
+    }
+  },
+  "29": {
+    "inputs": {
+      "frame_rate": 30,
+      "loop_count": 0,
+      "filename_prefix": "AnimateDiff",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "35",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "32": {
+    "inputs": {
+      "mask": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "InvertMask",
+    "_meta": {
+      "title": "InvertMask"
+    }
+  },
+  "35": {
+    "inputs": {
+      "transparency": true,
+      "model": "u2net",
+      "post_processing": false,
+      "only_mask": false,
+      "alpha_matting": false,
+      "alpha_matting_foreground_threshold": 240,
+      "alpha_matting_background_threshold": 10,
+      "alpha_matting_erode_size": 10,
+      "background_color": "none",
+      "images": [
+        "28",
+        0
+      ]
+    },
+    "class_type": "Image Rembg (Remove Background)",
+    "_meta": {
+      "title": "Image Rembg (Remove Background)"
+    }
+  },
+  "38": {
+    "inputs": {
+      "points_store": "{\"positive\":[{\"x\":350.6135737540583,\"y\":572.2134948280518}],\"negative\":[{\"x\":0,\"y\":0}]}",
+      "coordinates": "[{\"x\":350.6135737540583,\"y\":572.2134948280518}]",
+      "neg_coordinates": "[{\"x\":0,\"y\":0}]",
+      "bbox_store": "[{}]",
+      "bboxes": "[{}]",
+      "bbox_format": "xyxy",
+      "width": 1417,
+      "height": 991,
+      "normalize": false,
+      "New canvas": null,
+      "bg_image": [
+        "12",
+        0
+      ]
+    },
+    "class_type": "PointsEditor",
+    "_meta": {
+      "title": "Points Editor"
+    }
+  }
+}
