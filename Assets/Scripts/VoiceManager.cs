@@ -305,7 +305,7 @@ public class VoiceManager : MonoBehaviour
         
         milestones.Add(new ReadingMilestone {
             triggerPhrases = new[] { "light of the imagination", "imagination" },
-            onTrigger = () => roomManager.floorSpawner.enabled = true
+            onTrigger = () => roomManager.ceilingSpawner.enabled = true
         });
         
         milestones.Add(new ReadingMilestone {
@@ -314,7 +314,7 @@ public class VoiceManager : MonoBehaviour
         });
 
         milestones.Add(new ReadingMilestone {
-            triggerPhrases = new[] { "nineteen years", "eternal darkness" },
+            triggerPhrases = new[] { "eternal darkness", "darkness" },
             onTrigger = () => roomManager.wallFaceSpawner.enabled = true
         });
     }
