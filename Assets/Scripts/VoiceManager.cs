@@ -98,9 +98,9 @@ public class VoiceManager : MonoBehaviour
         else
         {
             // Check Transcript for wake word
-            foreach (string wake in wakeWords)
+            foreach (string wakeWord in wakeWords)
             {
-                if (text.Contains(wake))
+                if (text.Contains(wakeWord))
                 {
                     // Start listening for commands
                     listening = true;
@@ -114,7 +114,7 @@ public class VoiceManager : MonoBehaviour
                     Timeout = StartCoroutine(ListeningTimeout());
                     
                     // filter out wake word
-                    text = text.Replace(wake, "").Trim();
+                    text = text.Replace(wakeWord, "").Trim();
                 }
             }
 
@@ -242,7 +242,12 @@ public class VoiceManager : MonoBehaviour
         );
         
         EnqueueParagraph(
-            "He clung to one idea -- that of his happiness, destroyed, without apparent cause, by an unheard-of fatality; he considered and reconsidered this idea, devoured it (so to speak), as the implacable Ugolino devours the skull of Archbishop Roger in the Inferno of Dante",
+            "He clung to one idea -- that of his happiness, destroyed, without apparent cause, by an unheard-of fatality;",
+            null
+        );
+        
+        EnqueueParagraph(
+            "he considered and reconsidered this idea, devoured it (so to speak), as the implacable Ugolino devours the skull of Archbishop Roger in the Inferno of Dante.",
             null
         );
     }
@@ -273,7 +278,7 @@ public class VoiceManager : MonoBehaviour
             yield return new WaitWhile(() => ttsSpeaker.IsSpeaking);
             yield return new WaitForSeconds(0.1f);
 
-            p.onComplete.Invoke();
+            p.onComplete?.Invoke();
         }
 
         Narration = null;
@@ -325,9 +330,9 @@ public class VoiceManager : MonoBehaviour
         {
             ReadingMilestone m = milestones[currentMilestone];
 
-            foreach (string phrase in m.triggerPhrases)
+            foreach (string triggerPhrase in m.triggerPhrases)
             {
-                if (transcript.Contains(phrase))
+                if (transcript.Contains(triggerPhrase))
                 {
                     if (!m.triggered)
                     {

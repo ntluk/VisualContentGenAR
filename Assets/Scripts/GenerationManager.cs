@@ -33,6 +33,7 @@ public class GenerationManager : MonoBehaviour
             xCoordObjectInImageUpdated = true;
             Gen3DModelFromImgCoords();
         }
+        Debug.LogWarning("x");
     }
 
     public void setYcoordImageObject(float y)
