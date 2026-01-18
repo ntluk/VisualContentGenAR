@@ -1,1 +1,1 @@
-Visual Content Generation in AR
+### Visual Content Generation in AR ###
