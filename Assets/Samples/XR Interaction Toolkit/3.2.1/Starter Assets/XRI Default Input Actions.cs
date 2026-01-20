@@ -3506,6 +3506,15 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Trigger"",
+                    ""type"": ""Button"",
+                    ""id"": ""43bb8603-7243-4f88-9f69-daf4289e4286"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -3528,6 +3537,45 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SecondaryButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a52dab45-1f4c-4820-8c5c-66cd7bb8ae12"",
+                    ""path"": ""<XRController>{RightHand}/{PrimaryTrigger}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Trigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""LeftHand"",
+            ""id"": ""84273479-00df-4a72-83e9-f4b957cd4645"",
+            ""actions"": [
+                {
+                    ""name"": ""X"",
+                    ""type"": ""Button"",
+                    ""id"": ""31d07b3a-16ef-4dc1-98b1-aca5bef7bc70"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""6ec9fe6e-0847-4a73-8ae3-ee8356e53b76"",
+                    ""path"": ""<XRController>{LeftHand}/{PrimaryButton}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""X"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -3650,6 +3698,10 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         m_RightHand = asset.FindActionMap("RightHand", throwIfNotFound: true);
         m_RightHand_PrimaryButton = m_RightHand.FindAction("PrimaryButton", throwIfNotFound: true);
         m_RightHand_SecondaryButton = m_RightHand.FindAction("SecondaryButton", throwIfNotFound: true);
+        m_RightHand_Trigger = m_RightHand.FindAction("Trigger", throwIfNotFound: true);
+        // LeftHand
+        m_LeftHand = asset.FindActionMap("LeftHand", throwIfNotFound: true);
+        m_LeftHand_X = m_LeftHand.FindAction("X", throwIfNotFound: true);
     }
 
     ~@XRIDefaultInputActions()
@@ -3664,6 +3716,7 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         UnityEngine.Debug.Assert(!m_XRIUI.enabled, "This will cause a leak and performance issues, XRIDefaultInputActions.XRIUI.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_TouchscreenGestures.enabled, "This will cause a leak and performance issues, XRIDefaultInputActions.TouchscreenGestures.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_RightHand.enabled, "This will cause a leak and performance issues, XRIDefaultInputActions.RightHand.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_LeftHand.enabled, "This will cause a leak and performance issues, XRIDefaultInputActions.LeftHand.Disable() has not been called.");
     }
 
     /// <summary>
@@ -5518,6 +5571,7 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
     private List<IRightHandActions> m_RightHandActionsCallbackInterfaces = new List<IRightHandActions>();
     private readonly InputAction m_RightHand_PrimaryButton;
     private readonly InputAction m_RightHand_SecondaryButton;
+    private readonly InputAction m_RightHand_Trigger;
     /// <summary>
     /// Provides access to input actions defined in input action map "RightHand".
     /// </summary>
@@ -5537,6 +5591,10 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         /// Provides access to the underlying input action "RightHand/SecondaryButton".
         /// </summary>
         public InputAction @SecondaryButton => m_Wrapper.m_RightHand_SecondaryButton;
+        /// <summary>
+        /// Provides access to the underlying input action "RightHand/Trigger".
+        /// </summary>
+        public InputAction @Trigger => m_Wrapper.m_RightHand_Trigger;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -5569,6 +5627,9 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
             @SecondaryButton.started += instance.OnSecondaryButton;
             @SecondaryButton.performed += instance.OnSecondaryButton;
             @SecondaryButton.canceled += instance.OnSecondaryButton;
+            @Trigger.started += instance.OnTrigger;
+            @Trigger.performed += instance.OnTrigger;
+            @Trigger.canceled += instance.OnTrigger;
         }
 
         /// <summary>
@@ -5586,6 +5647,9 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
             @SecondaryButton.started -= instance.OnSecondaryButton;
             @SecondaryButton.performed -= instance.OnSecondaryButton;
             @SecondaryButton.canceled -= instance.OnSecondaryButton;
+            @Trigger.started -= instance.OnTrigger;
+            @Trigger.performed -= instance.OnTrigger;
+            @Trigger.canceled -= instance.OnTrigger;
         }
 
         /// <summary>
@@ -5619,6 +5683,102 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
     /// Provides a new <see cref="RightHandActions" /> instance referencing this action map.
     /// </summary>
     public RightHandActions @RightHand => new RightHandActions(this);
+
+    // LeftHand
+    private readonly InputActionMap m_LeftHand;
+    private List<ILeftHandActions> m_LeftHandActionsCallbackInterfaces = new List<ILeftHandActions>();
+    private readonly InputAction m_LeftHand_X;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "LeftHand".
+    /// </summary>
+    public struct LeftHandActions
+    {
+        private @XRIDefaultInputActions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public LeftHandActions(@XRIDefaultInputActions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "LeftHand/X".
+        /// </summary>
+        public InputAction @X => m_Wrapper.m_LeftHand_X;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_LeftHand; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="LeftHandActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(LeftHandActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="LeftHandActions" />
+        public void AddCallbacks(ILeftHandActions instance)
+        {
+            if (instance == null || m_Wrapper.m_LeftHandActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_LeftHandActionsCallbackInterfaces.Add(instance);
+            @X.started += instance.OnX;
+            @X.performed += instance.OnX;
+            @X.canceled += instance.OnX;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="LeftHandActions" />
+        private void UnregisterCallbacks(ILeftHandActions instance)
+        {
+            @X.started -= instance.OnX;
+            @X.performed -= instance.OnX;
+            @X.canceled -= instance.OnX;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="LeftHandActions.UnregisterCallbacks(ILeftHandActions)" />.
+        /// </summary>
+        /// <seealso cref="LeftHandActions.UnregisterCallbacks(ILeftHandActions)" />
+        public void RemoveCallbacks(ILeftHandActions instance)
+        {
+            if (m_Wrapper.m_LeftHandActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="LeftHandActions.AddCallbacks(ILeftHandActions)" />
+        /// <seealso cref="LeftHandActions.RemoveCallbacks(ILeftHandActions)" />
+        /// <seealso cref="LeftHandActions.UnregisterCallbacks(ILeftHandActions)" />
+        public void SetCallbacks(ILeftHandActions instance)
+        {
+            foreach (var item in m_Wrapper.m_LeftHandActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_LeftHandActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="LeftHandActions" /> instance referencing this action map.
+    /// </summary>
+    public LeftHandActions @LeftHand => new LeftHandActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "XRI Head" which allows adding and removing callbacks.
     /// </summary>
@@ -6356,5 +6516,27 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSecondaryButton(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Trigger" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTrigger(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "LeftHand" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="LeftHandActions.AddCallbacks(ILeftHandActions)" />
+    /// <seealso cref="LeftHandActions.RemoveCallbacks(ILeftHandActions)" />
+    public interface ILeftHandActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "X" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnX(InputAction.CallbackContext context);
     }
 }

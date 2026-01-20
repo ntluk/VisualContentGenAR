@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 public class RoomManager : MonoBehaviour
 {
-    public bool SetupRoom;
+    public bool SetupMode;
 
     public AnchorPositionMapper anchorPositionMapper;
     public SpatialAnchorLoaderBuildingBlock anchorLoader;
@@ -28,7 +28,7 @@ public class RoomManager : MonoBehaviour
     
     void Start()
     {
-        if (!SetupRoom)
+        if (!SetupMode)
             SetupScene();
     }
     
