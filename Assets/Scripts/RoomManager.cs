@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Meta.XR.BuildingBlocks;
 using Meta.XR.MRUtilityKit;
@@ -8,6 +10,7 @@ public class RoomManager : MonoBehaviour
 {
     public bool SetupMode;
 
+    public SpatialAnchorCoreBuildingBlock anchorSystem;
     public AnchorPositionMapper anchorPositionMapper;
     public SpatialAnchorLoaderBuildingBlock anchorLoader;
 
@@ -20,16 +23,13 @@ public class RoomManager : MonoBehaviour
     public AnchorPrefabSpawner storageSpawner;
 
     public GameObject defaultPainting;
-    
-    void Awake()
-    {
-       
-    }
+    private bool placedFrame;
     
     void Start()
     {
         if (!SetupMode)
             SetupScene();
+        
     }
     
     void Update()
@@ -39,11 +39,29 @@ public class RoomManager : MonoBehaviour
 
     }
 
+    private void LateUpdate()
+    {
+        if (!placedFrame && wallArtSpawner.AnchorPrefabSpawnerObjects.Values.ElementAt(0).gameObject != null)
+        {
+            defaultPainting.gameObject.transform.position = wallArtSpawner.AnchorPrefabSpawnerObjects.Values.ElementAt(0).gameObject
+                .transform.position;
+            defaultPainting.gameObject.transform.rotation = wallArtSpawner.AnchorPrefabSpawnerObjects.Values.ElementAt(0).gameObject
+                .transform.rotation;
+            defaultPainting.gameObject.SetActive(true);
+        }
+
+        placedFrame = true;
+    }
+
     private void SetupScene()
     {
         anchorPositionMapper.enabled = true;
     }
-    
+
+    private void ReplacePrefabWithInteractionFrame()
+    {
+        
+    }
     public void ResetRoom()
     {
         //delete GOs

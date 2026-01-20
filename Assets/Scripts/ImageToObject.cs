@@ -40,7 +40,7 @@ public class ImageToObject : MonoBehaviour
     public void Run(float x, float y)
     {
         streamWriter.WriteLine($"D:");
-        streamWriter.WriteLine($"cd D:/Projects/VisualContentGenerationAR/vcgAR/Python");
+        streamWriter.WriteLine($"cd D:/Projects/VisualContentGenAR/Python");
         //streamWriter.WriteLine($"cd C:/Projekte/AIArtExtendedPlus/Python");
         
         //streamWriter.WriteLine($"python segmentation_workflow.py --x=1260.0 --y=600.0");

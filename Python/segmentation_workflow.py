@@ -20,7 +20,7 @@ if __name__ == "__main__":
     Y = args.y
     
     # load the workflow from file, assign it to variable named prompt_workflow
-    prompt_workflow = json.load(open('D:/Projects/VisualContentGenerationAR/vcgAR/Python/Gen3D.json', 'r', encoding='utf-8'))
+    prompt_workflow = json.load(open('D:/Projects/VisualContentGenAR/Python/Gen3D.json', 'r', encoding='utf-8'))
 
     set_coords = prompt_workflow["115"]
 
