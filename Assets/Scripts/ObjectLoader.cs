@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class ObjectLoader : MonoBehaviour
 {
+    [SerializeField]
+    private GenerationManager genManager;
     private void Start()
     {
         //GameObject object3D = new GameObject("GameObject3", typeof(Rigidbody), typeof(BoxCollider));
@@ -12,13 +15,39 @@ public class ObjectLoader : MonoBehaviour
         
     }
 
-     public void Load3DObject()
+    public void Load3DObjectUntextured(string obj)
     {
-        //GameObject object3D2 = new GameObject("GameObject3", typeof(Rigidbody), typeof(BoxCollider));
-        GameObject object3D2 = new GameObject("GameObject3");
-        object3D2.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-        object3D2.transform.Rotate(0.0f, 0.0f, 0.0f, Space.Self);
-        var gltf2 = object3D2.AddComponent<GLTFast.GltfAsset>();
-        gltf2.Url = "file://D:\\Comfy\\ComfyUI_h2_1\\ComfyUI\\output\\Hy21_Mesh.glb";
+        foreach (var anchor in genManager.anchorList)
+        {
+            Guid id = anchor.Uuid;
+            GameObject prefab = genManager.mappings[id];
+
+            if (string.Equals(prefab.name, obj))
+            {
+                GameObject object3D2 = new GameObject("GenObject");
+                object3D2.transform.position = anchor.transform.position;
+                object3D2.transform.rotation = anchor.transform.rotation;
+                var gltf2 = object3D2.AddComponent<GLTFast.GltfAsset>();
+                gltf2.Url = "file://D://Comfy//ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh_00001_.glb";
+            }
+        }
+    }
+    
+    public void Load3DObject(string obj)
+    {
+        foreach (var anchor in genManager.anchorList)
+        {
+            Guid id = anchor.Uuid;
+            GameObject prefab = genManager.mappings[id];
+
+            if (string.Equals(prefab.name, obj))
+            {
+                GameObject object3D2 = new GameObject("GenObject");
+                object3D2.transform.position = anchor.transform.position;
+                object3D2.transform.rotation = anchor.transform.rotation;
+                var gltf2 = object3D2.AddComponent<GLTFast.GltfAsset>();
+                gltf2.Url = "file://D://Comfy//ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh.glb";
+            }
+        }
     }
 }

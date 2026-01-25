@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Meta.XR.BuildingBlocks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,19 +21,60 @@ public class GenerationManager : MonoBehaviour
     private TextToImage txt2img;
     private AnimateImage animImg;
     private ObjectLoader objLoad;
+    
+    public string objectGenerating;
+    public List<OVRSpatialAnchor> anchorList;
+    
+    public Dictionary<Guid, GameObject> mappings;
+    public SpatialAnchorCoreBuildingBlock anchorSystem;
+    public List<PrefabAnchorPairs> prefabAnchorPairs = new List<PrefabAnchorPairs>();
+    
+    [Serializable] 
+    public class PrefabAnchorPairs
+    {
+        public string uuid;
+        public GameObject prefab;
 
+        public Guid anchorUuid
+        {
+            get
+            {
+                Guid g;
+                if (Guid.TryParse(uuid, out g))
+                    return g;
+                return Guid.Empty;
+            }
+        }
+    }
+    
     void Awake()
     {
         img2obj = GetComponent<ImageToObject>();
         objLoad = GetComponent<ObjectLoader>();
+        mappings = new Dictionary<Guid, GameObject>();
+        foreach (var p in prefabAnchorPairs)
+        {
+            mappings.Add(p.anchorUuid, p.prefab);
+        }
+    }
+    
+    private void OnEnable()
+    {
+        anchorSystem.OnAnchorsLoadCompleted.AddListener(GetAnchors);
     }
 
+    public void OnHover(string obj)
+    {
+        objectGenerating = obj;
+        Debug.LogWarning(obj);
+    }
     public void setXcoordImageObject(float x)
     {
         if (!Mathf.Approximately(x, xCoordObjectInImage))
         {
             xCoordObjectInImage = x;
             xCoordObjectInImageUpdated = true;
+            //objectGenerating = obj;
             Gen3DModelFromImgCoords();
         }
         Debug.LogWarning("x");
@@ -42,6 +86,7 @@ public class GenerationManager : MonoBehaviour
         {
             yCoordObjectInImage = y;
             yCoordObjectInImageUpdated = true;
+            //objectGenerating = obj;
             Gen3DModelFromImgCoords();
         }
     }
@@ -60,15 +105,16 @@ public class GenerationManager : MonoBehaviour
                 img2obj.Run(xCoordObjectInImage, yCoordObjectInImage);
                 Debug.LogWarning("img2obj");
                 
-                StartCoroutine(LoadObject());
+                SpawnObjectPreview();
+                StartCoroutine(LoadObjectUntexturedFirst());
             }
         }
     }
     
     public void TranscriptPromptToObject(string prompt)
     {
-        //txt2obj.Run(prompt);
-        Debug.LogWarning("txt2obj");
+        img2obj.RunFast(prompt);
+        Debug.LogWarning("transcript2obj");
     }
     
     public void TranscriptPromptToImage(string prompt)
@@ -82,21 +128,109 @@ public class GenerationManager : MonoBehaviour
         //animImg.Run(id);
         Debug.LogWarning("animImg");
     }
-    
+
+    private void GetAnchors(List<OVRSpatialAnchor> anchors)
+    {
+        anchorList = anchors;
+    }
+    public void SpawnObjectPreview()
+    {
+        foreach (var anchor in anchorList)
+        {
+            Guid id = anchor.Uuid;
+            GameObject prefab = mappings[id];
+
+            if (string.Equals(prefab.name, objectGenerating))
+            {
+                Instantiate(
+                    prefab,
+                    anchor.transform.position,
+                    anchor.transform.rotation
+                );
+            }
+        }
+    }
+    private IEnumerator LoadObjectUntexturedFirst()
+    {
+        yield return StartCoroutine(LoadObjectUntextured()); 
+        yield return StartCoroutine(LoadObject()); 
+    }
     public IEnumerator LoadObject()
     {
         //FileInfo fileLatestGlb = new DirectoryInfo("C:/Comfy/ComfyUI_h2_1/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
-        FileInfo fileLatestGlb = new DirectoryInfo("D:/Comfy/ComfyUI_h2_1/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
+        //FileInfo fileLatestGlb = new DirectoryInfo("D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
+        
+        string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D";
+        FileInfo fileLatestGlb = null;
 
-        Debug.Log($" New file appeared! Loading {fileLatestGlb.Name}");
+        // wait until one file exists
+        yield return new WaitUntil(() => 
+            new DirectoryInfo(path).GetFiles("*.glb").Length > 0
+        );
 
+        // pick the latest
+        fileLatestGlb = new DirectoryInfo(path).GetFiles("*.glb")
+            .OrderByDescending(f => f.LastWriteTime)
+            .First();
+
+        Debug.Log($"New file appeared! Loading {fileLatestGlb.Name}");
+
+        // wait until the file is unlocked
         yield return new WaitUntil(() => !IsFileLocked(fileLatestGlb));
         yield return new WaitForSeconds(0.1f);
 
-        Debug.Log($"Finished generating obj.");
-        
-        objLoad.Load3DObject();
+        objLoad.Load3DObject(objectGenerating);
         Debug.Log("obj loaded");
+
+        // empty folder again
+        try
+        {
+            File.Delete(fileLatestGlb.FullName);
+            Debug.Log($"Deleted file: {fileLatestGlb.Name}");
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"Failed to delete file: {e.Message}");
+        }
+    }
+    
+    public IEnumerator LoadObjectUntextured()
+    {
+        //FileInfo fileLatestGlb = new DirectoryInfo("C:/Comfy/ComfyUI_h2_1/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
+        //FileInfo fileLatestGlb = new DirectoryInfo("D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
+        
+        string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D";
+        FileInfo fileLatestGlb = null;
+
+        // wait until one file exists
+        yield return new WaitUntil(() => 
+            new DirectoryInfo(path).GetFiles("*.glb").Length > 0
+        );
+
+        // pick the latest
+        fileLatestGlb = new DirectoryInfo(path).GetFiles("*.glb")
+            .OrderByDescending(f => f.LastWriteTime)
+            .First();
+
+        Debug.Log($"New file appeared! Loading {fileLatestGlb.Name}");
+
+        // wait until the file is unlocked
+        yield return new WaitUntil(() => !IsFileLocked(fileLatestGlb));
+        yield return new WaitForSeconds(0.1f);
+
+        objLoad.Load3DObjectUntextured(objectGenerating);
+        Debug.Log("obj loaded");
+
+        // empty folder again
+        try
+        {
+            File.Delete(fileLatestGlb.FullName);
+            Debug.Log($"Deleted file: {fileLatestGlb.Name}");
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"Failed to delete file: {e.Message}");
+        }
     }
     
     public IEnumerator loadImage(GameObject image, Sprite SpriteMain, Sprite Ergebnis)

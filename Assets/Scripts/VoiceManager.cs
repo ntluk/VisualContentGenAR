@@ -22,6 +22,8 @@ public class VoiceManager : MonoBehaviour
     private TTSSpeaker ttsSpeaker;
     [SerializeField] 
     private RoomManager roomManager;
+    [SerializeField] 
+    private GenerationManager genManager;
     
     [Header("Wake Word Settings")]
     [SerializeField] 
@@ -155,6 +157,19 @@ public class VoiceManager : MonoBehaviour
                 () => ImmersiveReading("Count")
             );
         }
+        else if (text.Contains("object"))
+        {   
+            string prompt = "";
+            if (text.Contains("prompt", StringComparison.OrdinalIgnoreCase))
+            {
+                int index = text.IndexOf("prompt", StringComparison.OrdinalIgnoreCase);
+                prompt = text.Substring(index + "prompt".Length).Trim();
+            }
+            TtsSpeak("Generating Object with prompt:" + prompt);
+            prompt = prompt + "white background";
+            
+            genManager.TranscriptPromptToObject(prompt);
+        }
         else if (text.Contains("drawing mode"))
         {
             TtsSpeak("Due to camera feed access limitaion this mode is not available over quest link!");
@@ -163,6 +178,10 @@ public class VoiceManager : MonoBehaviour
         {
             // stop
             // just change mode instead
+        }
+        else if (text.Contains("thank you"))
+        {
+            TtsSpeak("No Biggie!");
         }
         else
         {
