@@ -39,7 +39,9 @@ public class VoiceManager : MonoBehaviour
         "computer",
         "hey computer",
         "hello computer",
-        "okay computer"
+        "okay computer",
+        "Railey",
+        "Hailey"
     };
     
     private Coroutine Timeout;
