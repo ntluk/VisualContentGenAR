@@ -16,20 +16,20 @@ public class GenerationManager : MonoBehaviour
     private bool xCoordObjectInImageUpdated = false;
     private bool yCoordObjectInImageUpdated = false;
     
-    private ImageToObject img2obj;
-    private TextToObject txt2obj;
-    private TextToImage txt2img;
-    private AnimateImage animImg;
+    private GenerationProcessor genProcess;
+    //private TextToObject txt2obj;
+    //private TextToImage txt2img;
+    //private AnimateImage animImg;
     private ObjectLoader objLoad;
     
-    public string objectGenerating;
-    public List<OVRSpatialAnchor> anchorList;
+    private string objectGenerating;
+    //public List<OVRSpatialAnchor> anchorList;
     
-    public Dictionary<Guid, GameObject> mappings;
-    public SpatialAnchorCoreBuildingBlock anchorSystem;
-    public List<PrefabAnchorPairs> prefabAnchorPairs = new List<PrefabAnchorPairs>();
+    //public Dictionary<Guid, GameObject> mappings;
+    //public SpatialAnchorCoreBuildingBlock anchorSystem;
+   // public List<PrefabAnchorPairs> prefabAnchorPairs = new List<PrefabAnchorPairs>();
     
-    [Serializable] 
+    /*[Serializable] 
     public class PrefabAnchorPairs
     {
         public string uuid;
@@ -45,22 +45,22 @@ public class GenerationManager : MonoBehaviour
                 return Guid.Empty;
             }
         }
-    }
+    }*/
     
     void Awake()
     {
-        img2obj = GetComponent<ImageToObject>();
+        genProcess = GetComponent<GenerationProcessor>();
         objLoad = GetComponent<ObjectLoader>();
-        mappings = new Dictionary<Guid, GameObject>();
-        foreach (var p in prefabAnchorPairs)
-        {
-            mappings.Add(p.anchorUuid, p.prefab);
-        }
+        //mappings = new Dictionary<Guid, GameObject>();
+        //foreach (var p in prefabAnchorPairs)
+        //{
+        //    mappings.Add(p.anchorUuid, p.prefab);
+        //}
     }
     
     private void OnEnable()
     {
-        anchorSystem.OnAnchorsLoadCompleted.AddListener(GetAnchors);
+       // anchorSystem.OnAnchorsLoadCompleted.AddListener(GetAnchors);
     }
 
     public void OnHover(string obj)
@@ -102,10 +102,11 @@ public class GenerationManager : MonoBehaviour
                 xCoordObjectInImageUpdated = false;
                 yCoordObjectInImageUpdated = false;
 
-                img2obj.Run(xCoordObjectInImage, yCoordObjectInImage);
+                genProcess.ImageToObject(xCoordObjectInImage, yCoordObjectInImage);
                 Debug.LogWarning("img2obj");
                 
-                SpawnObjectPreview();
+                //SpawnObjectPreview();
+                ShowObjectPreview();
                 StartCoroutine(LoadObjectUntexturedFirst());
             }
         }
@@ -113,7 +114,7 @@ public class GenerationManager : MonoBehaviour
     
     public void TranscriptPromptToObject(string prompt)
     {
-        img2obj.RunFast(prompt);
+        genProcess.VoiceToMesh(prompt);
         Debug.LogWarning("transcript2obj");
     }
     
@@ -131,12 +132,21 @@ public class GenerationManager : MonoBehaviour
 
     private void GetAnchors(List<OVRSpatialAnchor> anchors)
     {
-        anchorList = anchors;
+        //anchorList = anchors;
     }
-    public void SpawnObjectPreview()
+
+    private void ShowObjectPreview()
+    {
+        // for var in list name preview game objects
+        //if objectGenerating equlas name 
+        //find in scene and enable mesh renderer
+    }
+    
+    /*public void SpawnObjectPreview()
     {
         foreach (var anchor in anchorList)
         {
+            Debug.LogWarning(anchor.Uuid);
             Guid id = anchor.Uuid;
             GameObject prefab = mappings[id];
 
@@ -149,7 +159,7 @@ public class GenerationManager : MonoBehaviour
                 );
             }
         }
-    }
+    }*/
     private IEnumerator LoadObjectUntexturedFirst()
     {
         yield return StartCoroutine(LoadObjectUntextured()); 

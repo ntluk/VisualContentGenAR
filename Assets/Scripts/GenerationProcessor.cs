@@ -4,7 +4,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Threading;
 
-public class ImageToObject : MonoBehaviour
+public class GenerationProcessor : MonoBehaviour
 {
     public Process process;
     public StreamWriter streamWriter;
@@ -37,7 +37,7 @@ public class ImageToObject : MonoBehaviour
         }
     }
 
-    public void Run(float x, float y)
+    public void ImageToObject(float x, float y)
     {
         streamWriter.WriteLine($"D:");
         streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
@@ -49,14 +49,14 @@ public class ImageToObject : MonoBehaviour
         
             
     }
-    public void RunFast(string p)
+    public void VoiceToMesh(string p)
     {
         streamWriter.WriteLine($"D:");
         streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
         //streamWriter.WriteLine($"cd C:\\Projekte\\NiklasTluk\\VisualContentGenAR\\Pythonn");
         
         //streamWriter.WriteLine($"python segmentation_workflow.py --x=1260.0 --y=600.0");
-        streamWriter.WriteLine($"python segmentation_workflow.py --p=" + p);
+        streamWriter.WriteLine($"python genObjFast.py --p=" + p);
         UnityEngine.Debug.Log("Writing: " + $"queueing img2obj with prompt:" + p);
         
             

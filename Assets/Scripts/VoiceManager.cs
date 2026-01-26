@@ -166,9 +166,21 @@ public class VoiceManager : MonoBehaviour
                 prompt = text.Substring(index + "prompt".Length).Trim();
             }
             TtsSpeak("Generating Object with prompt:" + prompt);
-            prompt = prompt + "white background";
+            prompt = prompt + " white background";
             
             genManager.TranscriptPromptToObject(prompt);
+        }
+        else if (text.Contains("image"))
+        {   
+            string prompt = "";
+            if (text.Contains("prompt", StringComparison.OrdinalIgnoreCase))
+            {
+                int index = text.IndexOf("prompt", StringComparison.OrdinalIgnoreCase);
+                prompt = text.Substring(index + "prompt".Length).Trim();
+            }
+            TtsSpeak("Generating Image with prompt:" + prompt);
+            
+            genManager.TranscriptPromptToImage(prompt);
         }
         else if (text.Contains("drawing mode"))
         {
