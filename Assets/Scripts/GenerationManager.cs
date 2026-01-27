@@ -120,13 +120,13 @@ public class GenerationManager : MonoBehaviour
     
     public void TranscriptPromptToImage(string prompt)
     {
-        //txt2img.Run(prompt);
+        genProcess.VoiceToImage(prompt);
         Debug.LogWarning("txt2img");
     }
     
-    public void AnimatePainting(int id)
+    public void AnimatePainting(string imgPath)
     {
-        //animImg.Run(id);
+        genProcess.AnimateImage(imgPath);
         Debug.LogWarning("animImg");
     }
 

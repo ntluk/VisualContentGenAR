@@ -46,8 +46,6 @@ public class GenerationProcessor : MonoBehaviour
         //streamWriter.WriteLine($"python segmentation_workflow.py --x=1260.0 --y=600.0");
         streamWriter.WriteLine($"python segmentation_workflow.py --x=" + x + " --y=" + y);
         UnityEngine.Debug.Log("Writing: " + $"queueing img2obj at (" + x + ", " + y + ")");
-        
-            
     }
     public void VoiceToMesh(string p)
     {
@@ -57,8 +55,28 @@ public class GenerationProcessor : MonoBehaviour
         
         //streamWriter.WriteLine($"python segmentation_workflow.py --x=1260.0 --y=600.0");
         streamWriter.WriteLine($"python genObjFast.py --p=" + p);
-        UnityEngine.Debug.Log("Writing: " + $"queueing img2obj with prompt:" + p);
+        UnityEngine.Debug.Log("Writing: " + $"queueing txt2obj with prompt:" + p);
+    }
+    
+    public void VoiceToImage(string p)
+    {
+        streamWriter.WriteLine($"D:");
+        streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
+        //streamWriter.WriteLine($"cd C:\\Projekte\\NiklasTluk\\VisualContentGenAR\\Pythonn");
         
-            
+        //streamWriter.WriteLine($"python segmentation_workflow.py --x=1260.0 --y=600.0");
+        streamWriter.WriteLine($"python genImg.py --p=" + p);
+        UnityEngine.Debug.Log("Writing: " + $"queueing txt2img with prompt:" + p);
+    }
+    
+    public void AnimateImage(string i)
+    {
+        streamWriter.WriteLine($"D:");
+        streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
+        //streamWriter.WriteLine($"cd C:\\Projekte\\NiklasTluk\\VisualContentGenAR\\Pythonn");
+        
+        //streamWriter.WriteLine($"python segmentation_workflow.py --x=1260.0 --y=600.0");
+        streamWriter.WriteLine($"python animImg.py --i=" + i);
+        UnityEngine.Debug.Log("Writing: " + $"queueing img2vid");
     }
 }

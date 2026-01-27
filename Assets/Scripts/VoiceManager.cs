@@ -182,6 +182,19 @@ public class VoiceManager : MonoBehaviour
             
             genManager.TranscriptPromptToImage(prompt);
         }
+        else if (text.Contains("animate"))
+        {   
+            if (text.Contains("virtual", StringComparison.OrdinalIgnoreCase))
+            {
+                genManager.AnimatePainting("");
+                TtsSpeak("Animating virtual Image.");
+            }
+            else if (text.Contains("real", StringComparison.OrdinalIgnoreCase))
+            {
+                genManager.AnimatePainting("");
+                TtsSpeak("Animating real Image.");
+            }
+        }
         else if (text.Contains("drawing mode"))
         {
             TtsSpeak("Due to camera feed access limitaion this mode is not available over quest link!");
