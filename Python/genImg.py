@@ -12,24 +12,19 @@ def queue_prompt(prompt_workflow):
   
 if __name__ == "__main__":  
     parser = argparse.ArgumentParser()
-    parser.add_argument("--x", required=True, type=str)
-    parser.add_argument("--y", required=True, type=str)
+    parser.add_argument("--p", required=True, type=str)
     args = parser.parse_args()
     
-    X = args.x
-    Y = args.y
+    P = args.p
     
     # load the workflow from file, assign it to variable named prompt_workflow
-    prompt_workflow = json.load(open('C:/Projekte/NiklasTluk/VisualContentGenAR/Python/api/Gen3D_api.json', 'r', encoding='utf-8'))
+    #prompt_workflow = json.load(open('C:/Projekte/NiklasTluk/VisualContentGenAR/Python/txt2objfast_api.json', 'r', encoding='utf-8'))
+    prompt_workflow = json.load(open('D:/Projects/VisualContentGenAR/Python/api/txt2img_api.json', 'r', encoding='utf-8'))
 
-    set_coords = prompt_workflow["115"]
-
+    set_prompt = prompt_workflow["91"]
 
     #set_coords["inputs"]["points_store"] = "{\"positive\":[{\"x\":1260.0,\"y\":600.0}],\"negative\":[{\"x\":0,\"y\":0}]}"
     #set_coords["inputs"]["coordinates"] = "[{\"x\":1260.0,\"y\":600.0}]"
-    set_coords["inputs"]["points_store"] = "{\"positive\":[{\"x\":" + X + ",\"y\":" + Y + "}],\"negative\":[{\"x\":0,\"y\":0}]}"
-    set_coords["inputs"]["coordinates"] = "[{\"x\":" + X + ",\"y\":" + Y + "}]"
-
-
-
+    set_prompt["inputs"]["text"] = P
+   
     queue_prompt(prompt_workflow)
