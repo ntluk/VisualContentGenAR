@@ -107,7 +107,7 @@ public class GenerationManager : MonoBehaviour
                 
                 //SpawnObjectPreview();
                 ShowObjectPreview();
-                StartCoroutine(LoadObjectUntexturedFirst());
+                StartCoroutine(LoadObjectUntexturedFirst(objectGenerating));
             }
         }
     }
@@ -140,6 +140,7 @@ public class GenerationManager : MonoBehaviour
         // for var in list name preview game objects
         //if objectGenerating equlas name 
         //find in scene and enable mesh renderer
+        GameObject.Find(objectGenerating).GetComponentInChildren<MeshRenderer>().enabled = true;
     }
     
     /*public void SpawnObjectPreview()
@@ -160,9 +161,9 @@ public class GenerationManager : MonoBehaviour
             }
         }
     }*/
-    private IEnumerator LoadObjectUntexturedFirst()
+    private IEnumerator LoadObjectUntexturedFirst(string obj)
     {
-        yield return StartCoroutine(LoadObjectUntextured()); 
+        yield return StartCoroutine(LoadObjectUntextured(obj)); 
         yield return StartCoroutine(LoadObject()); 
     }
     public IEnumerator LoadObject()
@@ -189,9 +190,10 @@ public class GenerationManager : MonoBehaviour
         yield return new WaitUntil(() => !IsFileLocked(fileLatestGlb));
         yield return new WaitForSeconds(0.1f);
 
-        objLoad.Load3DObject(objectGenerating);
+        objLoad.Load3DObject();
         Debug.Log("obj loaded");
 
+        yield return new WaitForSeconds(1f);
         // empty folder again
         try
         {
@@ -203,17 +205,17 @@ public class GenerationManager : MonoBehaviour
             Debug.LogWarning($"Failed to delete file: {e.Message}");
         }
     }
-    
-    public IEnumerator LoadObjectUntextured()
+
+    public IEnumerator LoadObjectUntextured(string obj)
     {
         //FileInfo fileLatestGlb = new DirectoryInfo("C:/Comfy/ComfyUI_h2_1/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
         //FileInfo fileLatestGlb = new DirectoryInfo("D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
-        
+
         string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D";
         FileInfo fileLatestGlb = null;
 
         // wait until one file exists
-        yield return new WaitUntil(() => 
+        yield return new WaitUntil(() =>
             new DirectoryInfo(path).GetFiles("*.glb").Length > 0
         );
 
@@ -228,9 +230,10 @@ public class GenerationManager : MonoBehaviour
         yield return new WaitUntil(() => !IsFileLocked(fileLatestGlb));
         yield return new WaitForSeconds(0.1f);
 
-        objLoad.Load3DObjectUntextured(objectGenerating);
+        objLoad.Load3DObjectUntextured(obj);
         Debug.Log("obj loaded");
 
+        yield return new WaitForSeconds(1f);
         // empty folder again
         try
         {
