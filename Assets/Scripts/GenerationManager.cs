@@ -23,39 +23,11 @@ public class GenerationManager : MonoBehaviour
     private ObjectLoader objLoad;
     
     private string objectGenerating;
-    //public List<OVRSpatialAnchor> anchorList;
-    
-    //public Dictionary<Guid, GameObject> mappings;
-    //public SpatialAnchorCoreBuildingBlock anchorSystem;
-   // public List<PrefabAnchorPairs> prefabAnchorPairs = new List<PrefabAnchorPairs>();
-    
-    /*[Serializable] 
-    public class PrefabAnchorPairs
-    {
-        public string uuid;
-        public GameObject prefab;
-
-        public Guid anchorUuid
-        {
-            get
-            {
-                Guid g;
-                if (Guid.TryParse(uuid, out g))
-                    return g;
-                return Guid.Empty;
-            }
-        }
-    }*/
     
     void Awake()
     {
         genProcess = GetComponent<GenerationProcessor>();
         objLoad = GetComponent<ObjectLoader>();
-        //mappings = new Dictionary<Guid, GameObject>();
-        //foreach (var p in prefabAnchorPairs)
-        //{
-        //    mappings.Add(p.anchorUuid, p.prefab);
-        //}
     }
     
     private void OnEnable()
@@ -130,37 +102,11 @@ public class GenerationManager : MonoBehaviour
         Debug.LogWarning("animImg");
     }
 
-    private void GetAnchors(List<OVRSpatialAnchor> anchors)
-    {
-        //anchorList = anchors;
-    }
-
     private void ShowObjectPreview()
     {
-        // for var in list name preview game objects
-        //if objectGenerating equlas name 
-        //find in scene and enable mesh renderer
         GameObject.Find(objectGenerating).GetComponentInChildren<MeshRenderer>().enabled = true;
     }
     
-    /*public void SpawnObjectPreview()
-    {
-        foreach (var anchor in anchorList)
-        {
-            Debug.LogWarning(anchor.Uuid);
-            Guid id = anchor.Uuid;
-            GameObject prefab = mappings[id];
-
-            if (string.Equals(prefab.name, objectGenerating))
-            {
-                Instantiate(
-                    prefab,
-                    anchor.transform.position,
-                    anchor.transform.rotation
-                );
-            }
-        }
-    }*/
     private IEnumerator LoadObjectUntexturedFirst(string obj)
     {
         yield return StartCoroutine(LoadObjectUntextured(obj)); 
