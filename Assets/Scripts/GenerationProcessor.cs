@@ -53,7 +53,6 @@ public class GenerationProcessor : MonoBehaviour
         streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
         //streamWriter.WriteLine($"cd C:\\Projekte\\VisualContentGenAR\\Python");
         
-        //streamWriter.WriteLine($"python segmentation_workflow.py --x=1260.0 --y=600.0");
         streamWriter.WriteLine($"python genObjFast.py --p=" + p);
         UnityEngine.Debug.Log("Writing: " + $"queueing txt2obj with prompt:" + p);
     }
@@ -64,7 +63,6 @@ public class GenerationProcessor : MonoBehaviour
         streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
         //streamWriter.WriteLine($"cd C:\\Projekte\\VisualContentGenAR\\Python");
         
-        //streamWriter.WriteLine($"python segmentation_workflow.py --x=1260.0 --y=600.0");
         streamWriter.WriteLine($"python genImg.py --p=" + p);
         UnityEngine.Debug.Log("Writing: " + $"queueing txt2img with prompt:" + p);
     }
@@ -75,7 +73,6 @@ public class GenerationProcessor : MonoBehaviour
         streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
         //streamWriter.WriteLine($"cd C:\\Projekte\\VisualContentGenAR\\Python");
         
-        //streamWriter.WriteLine($"python segmentation_workflow.py --x=1260.0 --y=600.0");
         streamWriter.WriteLine($"python animImg.py --i=" + i);
         UnityEngine.Debug.Log("Writing: " + $"queueing img2vid");
     }

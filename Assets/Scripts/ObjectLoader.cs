@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Oculus.Interaction;
+using Oculus.Interaction.HandGrab;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 
@@ -8,15 +9,6 @@ public class ObjectLoader : MonoBehaviour
 {
     [SerializeField]
     private GenerationManager genManager;
-    private void Start()
-    {
-        //GameObject object3D = new GameObject("GameObject3", typeof(Rigidbody), typeof(BoxCollider));
-        //object3D.transform.position = new Vector3(5, 10, 0);
-        //var gltf = object3D.AddComponent<GLTFast.GltfAsset>();
-        //gltf.Url = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf";
-
-        
-    }
 
     public void Load3DObjectUntextured(string obj)
     {
@@ -56,8 +48,18 @@ public class ObjectLoader : MonoBehaviour
         rb.useGravity = false;
         rb.isKinematic = true;
 
-        go.AddComponent<Grabbable>();
+        var gr = go.AddComponent<Grabbable>();
+        gr.InjectOptionalRigidbody(rb);
         
+        var hg =go.AddComponent<HandGrabInteractable>();
+        hg.InjectOptionalPointableElement(gr);
+        hg.InjectRigidbody(rb);
+        hg.Enable();
+        
+        var gi =go.AddComponent<GrabInteractable>();
+        gi.InjectOptionalPointableElement(gr);
+        gi.InjectRigidbody(rb);
+        gi.Enable();
     }
     
     public void Load3DObject()
@@ -103,7 +105,7 @@ public class ObjectLoader : MonoBehaviour
         object3D2.transform.rotation = preview.transform.rotation;
         object3D2.transform.localScale = preview.transform.localScale;
         var gltf2 = object3D2.AddComponent<GLTFast.GltfAsset>();
-        gltf2.Url = "file://D://Comfy//ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh_00001_.glb";
+        gltf2.Url = "file://D://Comfy//ComfyUI_h2_1//ComfyUI//output//mesh//Hy21_Mesh_00001_.glb";
         gltf2.Load(gltf2.Url);
         Destroy(preview);
 
