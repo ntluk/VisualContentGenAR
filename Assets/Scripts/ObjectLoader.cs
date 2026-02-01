@@ -87,13 +87,6 @@ public class ObjectLoader : MonoBehaviour
         Destroy(untextured);
         
         StartCoroutine(MakeGrabbable(object3D2));
-        
-        /*object3D2.transform.Find("world/tmpoh_bewpp.ply").gameObject.AddComponent<BoxCollider>();
-        object3D2.transform.Find("world/tmpoh_bewpp.ply").gameObject.AddComponent<Rigidbody>();
-        object3D2.transform.Find("world/tmpoh_bewpp.ply").gameObject.AddComponent<Grabbable>();
-        object3D2.transform.Find("world/tmpoh_bewpp.ply").gameObject.GetComponent<Rigidbody>().useGravity = false;
-        object3D2.transform.Find("world/tmpoh_bewpp.ply").gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        */
     }
 
     public void Load3DMesh()

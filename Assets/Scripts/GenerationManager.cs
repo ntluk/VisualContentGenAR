@@ -17,9 +17,6 @@ public class GenerationManager : MonoBehaviour
     private bool yCoordObjectInImageUpdated = false;
     
     private GenerationProcessor genProcess;
-    //private TextToObject txt2obj;
-    //private TextToImage txt2img;
-    //private AnimateImage animImg;
     private ObjectLoader objLoad;
     
     private string objectGenerating;
@@ -95,13 +92,15 @@ public class GenerationManager : MonoBehaviour
     {
         genProcess.VoiceToImage(prompt);
         Debug.LogWarning("txt2img");
-        //StartCoroutine(LoadImage());
+        Debug.LogWarning(GameObject.Find("VirtualImage"));
+        StartCoroutine(LoadImage(GameObject.Find("VirtualImage")));
     }
     
-    public void AnimatePainting(string imgPath)
+    public void AnimatePainting(string imgPath, int type)
     {
         genProcess.AnimateImage(imgPath);
         Debug.LogWarning("animImg");
+        //roommanager.defaultpinting or find gaemobject by name for anchor pos
         //StartCoroutine(LoadVideo());
     }
 
@@ -235,28 +234,56 @@ public class GenerationManager : MonoBehaviour
         }
     }
     
-    public IEnumerator loadImage(GameObject image, Sprite SpriteMain, Sprite Ergebnis)
+    public IEnumerator LoadImage(GameObject image)
     {
-        FileInfo fileLatestPng = new DirectoryInfo("C:/Projekte/ComfyUI_windows_portable/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".jpg").OrderByDescending(f => f.LastWriteTime).First();
-        //FileInfo fileLatestPng = new DirectoryInfo("D:/Projects/AAGEPlus/ComfyUI_windows_portable/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".png").OrderByDescending(f => f.LastWriteTime).First();
+        //FileInfo fileLatestGlb = new DirectoryInfo("C:/Comfy/ComfyUI_h2_1/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
+        //FileInfo fileLatestGlb = new DirectoryInfo("D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
+        
+        string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output";
+        FileInfo fileLatestPng;
 
-        UnityEngine.Debug.Log($" New file appeared! Loading {fileLatestPng.Name}");
+        // wait until one file exists
+        yield return new WaitUntil(() =>
+            new DirectoryInfo(path).GetFiles("*.png").Length > 0
+        );
 
+        // pick the latest
+        fileLatestPng = new DirectoryInfo(path)
+            .GetFiles("*.png")
+            .OrderByDescending(f => f.LastWriteTime)
+            .First();
+
+        Debug.Log($"New file appeared! Loading {fileLatestPng.Name}");
+
+        // wait until file is unlocked
         yield return new WaitUntil(() => !IsFileLocked(fileLatestPng));
         yield return new WaitForSeconds(0.1f);
+        
+        Texture2D texture = LoadTextureFromFile(fileLatestPng.FullName);
+        if(!image.GetComponentInChildren<MeshRenderer>())
+            Debug.LogWarning("nomr");
+        MeshRenderer mr = image.GetComponentInChildren<MeshRenderer>();
+        
+        Material mat = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+        mat.SetTexture("_BaseMap", texture);
+        mr.material = mat;
 
-        UnityEngine.Debug.Log($"Finished loading image.");
+        Debug.Log("img loaded");
 
-        Material mat = new Material(Shader.Find("Standard"));
-        mat.mainTexture = texLoadImageSecure(fileLatestPng.FullName, mat.mainTexture as Texture2D);
-        SpriteMain = Sprite.Create(mat.mainTexture as Texture2D, new Rect(0.0f, 0.0f, mat.mainTexture.width, mat.mainTexture.height), new Vector2(0.5f, 0.5f), 100.0f);
-
-
-        Ergebnis = SpriteMain;
-        image.GetComponent<Image>().sprite = Ergebnis;
+        yield return new WaitForSeconds(1f);
+        // empty folder again
+        try
+        {
+            File.Delete(fileLatestPng.FullName);
+            Debug.Log($"Deleted file: {fileLatestPng.Name}");
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"Failed to delete file: {e.Message}");
+        }
     }
     
-    public IEnumerator loadVideo()
+    public IEnumerator LoadVideo()
     {
         FileInfo fileLatestPng = new DirectoryInfo("C:/Projekte/ComfyUI_windows_portable/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".jpg").OrderByDescending(f => f.LastWriteTime).First();
         //FileInfo fileLatestPng = new DirectoryInfo("D:/Projects/AAGEPlus/ComfyUI_windows_portable/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".png").OrderByDescending(f => f.LastWriteTime).First();
@@ -288,25 +315,13 @@ public class GenerationManager : MonoBehaviour
         return false;
     }
     
-    public static Texture2D texLoadImageSecure(string _strFilePath, Texture2D _texDefault)
+    Texture2D LoadTextureFromFile(string filePath)
     {
-        if (!File.Exists(_strFilePath))
-        {
-            Debug.Log($"Could not load image {_strFilePath}. File does not exist.");
-            return _texDefault;
-        }
-
-        Texture2D texture = new Texture2D(1, 1);
-        try
-        {
-            byte[] bytes = File.ReadAllBytes(_strFilePath);
-            texture.LoadImage(bytes);
-            return texture;
-        }
-        catch
-        {
-            Debug.Log($"Could not load image {_strFilePath}. Crashed.");
-            return _texDefault;
-        }
+        byte[] data = File.ReadAllBytes(filePath);
+        Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+        tex.LoadImage(data);
+        tex.Apply();
+        return tex;
     }
+
 }

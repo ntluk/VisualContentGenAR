@@ -23,6 +23,7 @@ public class RoomManager : MonoBehaviour
     public AnchorPrefabSpawner storageSpawner;
 
     public GameObject defaultPainting;
+    public GameObject virtualPainting;
     private bool placedFrame;
     
     void Start()

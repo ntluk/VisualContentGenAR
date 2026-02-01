@@ -186,12 +186,12 @@ public class VoiceManager : MonoBehaviour
         {   
             if (text.Contains("virtual", StringComparison.OrdinalIgnoreCase))
             {
-                genManager.AnimatePainting("");
+                genManager.AnimatePainting("", 1);
                 TtsSpeak("Animating virtual Image.");
             }
             else if (text.Contains("real", StringComparison.OrdinalIgnoreCase))
             {
-                genManager.AnimatePainting("");
+                genManager.AnimatePainting("", 0);
                 TtsSpeak("Animating real Image.");
             }
         }
