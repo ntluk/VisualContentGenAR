@@ -88,18 +88,21 @@ public class GenerationManager : MonoBehaviour
     {
         genProcess.VoiceToMesh(prompt);
         Debug.LogWarning("transcript2obj");
+        StartCoroutine(LoadMesh());
     }
     
     public void TranscriptPromptToImage(string prompt)
     {
         genProcess.VoiceToImage(prompt);
         Debug.LogWarning("txt2img");
+        //StartCoroutine(LoadImage());
     }
     
     public void AnimatePainting(string imgPath)
     {
         genProcess.AnimateImage(imgPath);
         Debug.LogWarning("animImg");
+        //StartCoroutine(LoadVideo());
     }
 
     private void ShowObjectPreview()
@@ -178,6 +181,46 @@ public class GenerationManager : MonoBehaviour
 
         objLoad.Load3DObjectUntextured(obj);
         Debug.Log("obj loaded");
+
+        yield return new WaitForSeconds(1f);
+        // empty folder again
+        try
+        {
+            File.Delete(fileLatestGlb.FullName);
+            Debug.Log($"Deleted file: {fileLatestGlb.Name}");
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"Failed to delete file: {e.Message}");
+        }
+    }
+    
+    public IEnumerator LoadMesh()
+    {
+        //FileInfo fileLatestGlb = new DirectoryInfo("C:/Comfy/ComfyUI_h2_1/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
+        //FileInfo fileLatestGlb = new DirectoryInfo("D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
+        
+        string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output/mesh";
+        FileInfo fileLatestGlb = null;
+
+        // wait until one file exists
+        yield return new WaitUntil(() => 
+            new DirectoryInfo(path).GetFiles("*.glb").Length > 0
+        );
+
+        // pick the latest
+        fileLatestGlb = new DirectoryInfo(path).GetFiles("*.glb")
+            .OrderByDescending(f => f.LastWriteTime)
+            .First();
+
+        Debug.Log($"New file appeared! Loading {fileLatestGlb.Name}");
+
+        // wait until the file is unlocked
+        yield return new WaitUntil(() => !IsFileLocked(fileLatestGlb));
+        yield return new WaitForSeconds(0.1f);
+
+        objLoad.Load3DMesh();
+        Debug.Log("mesh loaded");
 
         yield return new WaitForSeconds(1f);
         // empty folder again

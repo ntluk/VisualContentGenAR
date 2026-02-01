@@ -10,6 +10,9 @@ public class ObjectLoader : MonoBehaviour
     [SerializeField]
     private GenerationManager genManager;
 
+    [SerializeField] 
+    private GameObject leftHand;
+
     public void Load3DObjectUntextured(string obj)
     {
         GameObject preview = GameObject.Find(obj);
@@ -93,21 +96,19 @@ public class ObjectLoader : MonoBehaviour
         */
     }
 
-    public void Load3DMesh(string obj)
+    public void Load3DMesh()
     {
-        //ref hand transform
-        
-        
-        GameObject preview = GameObject.Find(obj);
-
         GameObject object3D2 = new GameObject("Mesh");
-        object3D2.transform.position = preview.transform.position;
-        object3D2.transform.rotation = preview.transform.rotation;
-        object3D2.transform.localScale = preview.transform.localScale;
+        object3D2.transform.position = leftHand.transform.position;
+        object3D2.transform.position += Vector3.up * 0.1f;
+        object3D2.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+        Vector3 meshEuler = object3D2.transform.eulerAngles;
+        meshEuler.y = 180f;
+        object3D2.transform.eulerAngles = meshEuler;
+        
         var gltf2 = object3D2.AddComponent<GLTFast.GltfAsset>();
-        gltf2.Url = "file://D://Comfy//ComfyUI_h2_1//ComfyUI//output//mesh//Hy21_Mesh_00001_.glb";
+        gltf2.Url = "file://D://Comfy//ComfyUI_h2_1//ComfyUI//output//mesh//ComfyUI_00001_.glb";
         gltf2.Load(gltf2.Url);
-        Destroy(preview);
 
         StartCoroutine(MakeGrabbable(object3D2));
     }

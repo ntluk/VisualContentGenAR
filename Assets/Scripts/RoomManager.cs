@@ -41,16 +41,17 @@ public class RoomManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!placedFrame && wallArtSpawner.AnchorPrefabSpawnerObjects.Values.ElementAt(0).gameObject != null)
-        {
-            defaultPainting.gameObject.transform.position = wallArtSpawner.AnchorPrefabSpawnerObjects.Values.ElementAt(0).gameObject
-                .transform.position;
-            defaultPainting.gameObject.transform.rotation = wallArtSpawner.AnchorPrefabSpawnerObjects.Values.ElementAt(0).gameObject
-                .transform.rotation;
-            defaultPainting.gameObject.SetActive(true);
-        }
-
-        placedFrame = true;
+        if (!placedFrame && wallArtSpawner != null)
+            if(wallArtSpawner.AnchorPrefabSpawnerObjects != null && wallArtSpawner.AnchorPrefabSpawnerObjects.Count > 0)
+            {
+                defaultPainting.gameObject.transform.position = wallArtSpawner.AnchorPrefabSpawnerObjects.Values.ElementAt(0).gameObject
+                    .transform.position;
+                defaultPainting.gameObject.transform.rotation = wallArtSpawner.AnchorPrefabSpawnerObjects.Values.ElementAt(0).gameObject
+                    .transform.rotation;
+                
+                defaultPainting.gameObject.SetActive(true);
+                placedFrame = true;
+            }
     }
 
     private void SetupScene()
