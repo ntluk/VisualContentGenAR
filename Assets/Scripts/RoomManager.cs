@@ -21,7 +21,15 @@ public class RoomManager : MonoBehaviour
     public AnchorPrefabSpawner tableSpawner;
     public AnchorPrefabSpawner couchSpawner;
     public AnchorPrefabSpawner storageSpawner;
-
+    public AnchorPrefabSpawner doorSpawner;
+    public AnchorPrefabSpawner windowSpawner;
+    public AnchorPrefabSpawner screenSpawner;
+    public AnchorPrefabSpawner plantSpawner;
+    public AnchorPrefabSpawner lampSpawner;
+    public AnchorPrefabSpawner bedSpawner;
+    public AnchorPrefabSpawner otherSpawner;
+    // unkown?
+    
     public GameObject defaultPainting;
     public GameObject virtualPainting;
     private bool placedFrame;

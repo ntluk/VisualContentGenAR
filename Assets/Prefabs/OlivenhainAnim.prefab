@@ -6043,7 +6043,7 @@ GameObject:
   - component: {fileID: 3260047373482894455}
   - component: {fileID: 6741699305014846315}
   m_Layer: 0
-  m_Name: Olivenhain
+  m_Name: OlivenhainAnim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

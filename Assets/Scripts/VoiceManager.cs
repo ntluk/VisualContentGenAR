@@ -268,13 +268,28 @@ public class VoiceManager : MonoBehaviour
         );
         
         EnqueueParagraph(
-            "bring to life the nations that had perished, and rebuild the ancient cities so vast and stupendous in the light of the imagination, and that pass before the eye glowing with celestial colors in Martin's Babylonian pictures.",
-            () => roomManager.floorSpawner.enabled = true
+            "bring to life the nations that had perished,",
+            () => roomManager.plantSpawner.enabled = true
         );
         
         EnqueueParagraph(
-            "He could not do this, he whose past life was so short, whose present so melancholy, and his future so doubtful.",
+            "and rebuild the ancient cities so vast and stupendous in the light of the imagination,",
+            () => roomManager.screenSpawner.enabled = true
+        );
+        
+        EnqueueParagraph(
+            "and that pass before the eye glowing with celestial colors in Martin's Babylonian pictures.",
+            () => roomManager.otherSpawner.enabled = true
+        );
+        
+        EnqueueParagraph(
+            "He could not do this, he whose past life was so short,",
             () => roomManager.ceilingSpawner.enabled = true
+        );
+        
+        EnqueueParagraph(
+            "whose present so melancholy, and his future so doubtful.",
+            () => roomManager.lampSpawner.enabled = true
         );
         
         EnqueueParagraph(
@@ -283,13 +298,29 @@ public class VoiceManager : MonoBehaviour
         );
         
         EnqueueParagraph(
-            "No distraction could come to his aid; his energetic spirit, that would have exalted in thus revisiting the past, was imprisoned like an eagle in a cage.",
-            null
+            "No distraction could come to his aid; ",
+            () => roomManager.bedSpawner.enabled = true
         );
         
         EnqueueParagraph(
-            "He clung to one idea -- that of his happiness, destroyed, without apparent cause, by an unheard-of fatality;",
-            null
+            "his energetic spirit, that would have exalted in thus revisiting the past, was imprisoned like an eagle in a cage.",
+            () => roomManager.floorSpawner.enabled = true
+        );
+        
+        EnqueueParagraph(
+            "He clung to one idea -- ",
+            () => roomManager.wallFaceSpawner.enabled = true
+        );
+        
+        
+        EnqueueParagraph(
+            "that of his happiness, destroyed, without apparent cause, by an unheard-of fatality;",
+            () => roomManager.windowSpawner.enabled = true
+        );
+        
+        EnqueueParagraph(
+            "he considered and reconsidered this idea,",
+            () => roomManager.doorSpawner.enabled = true
         );
         
         EnqueueParagraph(
