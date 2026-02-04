@@ -319,12 +319,12 @@ public class VoiceManager : MonoBehaviour
         );
         
         EnqueueParagraph(
-            "he considered and reconsidered this idea,",
+            "he considered and reconsidered this idea, ",
             () => roomManager.doorSpawner.enabled = true
         );
         
         EnqueueParagraph(
-            "he considered and reconsidered this idea, devoured it (so to speak), as the implacable Ugolino devours the skull of Archbishop Roger in the Inferno of Dante.",
+            "devoured it (so to speak), as the implacable Ugolino devours the skull of Archbishop Roger in the Inferno of Dante.",
             null
         );
     }
