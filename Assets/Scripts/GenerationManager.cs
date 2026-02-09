@@ -6,6 +6,7 @@ using System.Linq;
 using Meta.XR.BuildingBlocks;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class GenerationManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class GenerationManager : MonoBehaviour
     
     private GenerationProcessor genProcess;
     private ObjectLoader objLoad;
+    private RoomManager room;
     
     private string objectGenerating;
     
@@ -25,6 +27,7 @@ public class GenerationManager : MonoBehaviour
     {
         genProcess = GetComponent<GenerationProcessor>();
         objLoad = GetComponent<ObjectLoader>();
+        room = GetComponent<RoomManager>();
     }
     
     private void OnEnable()
@@ -98,10 +101,23 @@ public class GenerationManager : MonoBehaviour
     
     public void AnimatePainting(string imgPath, int type)
     {
+        GameObject image = null;
+        
+        if (type == 0)
+        {
+            imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\1_kI_cbCh6HYSMUqfFAHtK1Q.jpg";
+            image = room.defaultPainting;
+        }
+        else if (type == 1)
+        {
+            imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
+            image = room.virtualPainting;
+
+        }
         genProcess.AnimateImage(imgPath);
         Debug.LogWarning("animImg");
-        //roommanager.defaultpinting or find gaemobject by name for anchor pos
-        //StartCoroutine(LoadVideo());
+        
+        StartCoroutine(LoadVideo(image));
     }
 
     private void ShowObjectPreview()
@@ -261,7 +277,7 @@ public class GenerationManager : MonoBehaviour
         
         Texture2D texture = LoadTextureFromFile(fileLatestPng.FullName);
         if(!image.GetComponentInChildren<MeshRenderer>())
-            Debug.LogWarning("nomr");
+            Debug.LogWarning("no MR");
         MeshRenderer mr = image.GetComponentInChildren<MeshRenderer>();
         
         Material mat = new Material(Shader.Find("Universal Render Pipeline/Lit"));
@@ -283,19 +299,77 @@ public class GenerationManager : MonoBehaviour
         }
     }
     
-    public IEnumerator LoadVideo()
+    public IEnumerator LoadVideo(GameObject image)
     {
-        FileInfo fileLatestPng = new DirectoryInfo("C:/Projekte/ComfyUI_windows_portable/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".jpg").OrderByDescending(f => f.LastWriteTime).First();
-        //FileInfo fileLatestPng = new DirectoryInfo("D:/Projects/AAGEPlus/ComfyUI_windows_portable/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".png").OrderByDescending(f => f.LastWriteTime).First();
-
-        UnityEngine.Debug.Log($" New file appeared! Loading {fileLatestPng.Name}");
-
-        yield return new WaitUntil(() => !IsFileLocked(fileLatestPng));
-        yield return new WaitForSeconds(0.1f);
-
-        UnityEngine.Debug.Log($"Finished loading image.");
-
+        //FileInfo fileLatestGlb = new DirectoryInfo("C:/Comfy/ComfyUI_h2_1/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
+        //FileInfo fileLatestGlb = new DirectoryInfo("D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
         
+        string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output";
+        FileInfo fileLatestMp4;
+
+        // wait until one file exists
+        yield return new WaitUntil(() =>
+            new DirectoryInfo(path).GetFiles("*.mp4").Length > 0
+        );
+
+        // pick the latest 
+        fileLatestMp4 = new DirectoryInfo(path)
+            .GetFiles("*.mp4")
+            .OrderByDescending(f => f.LastWriteTime)
+            .First();
+
+        Debug.Log($"New file appeared! Loading {fileLatestMp4.Name}");
+
+        // wait until file is unlocked
+        yield return new WaitUntil(() => !IsFileLocked(fileLatestMp4));
+        yield return new WaitForSeconds(0.1f);
+        
+        // copy file into project folder
+        string copy = Path.Combine(
+            Application.persistentDataPath,
+            fileLatestMp4.Name
+        );
+        
+        File.Copy(fileLatestMp4.FullName, copy, true);
+
+        // add VideoPlayer
+        VideoPlayer videoPlayer = image.AddComponent<VideoPlayer>();
+        
+        videoPlayer.source = VideoSource.Url;
+        videoPlayer.url = copy;
+        videoPlayer.playOnAwake = false;
+        videoPlayer.isLooping = true;
+
+        // render to material
+        MeshRenderer mr = image.GetComponentInChildren<MeshRenderer>();
+        if (mr != null)
+        {
+            videoPlayer.renderMode = VideoRenderMode.MaterialOverride;
+            videoPlayer.targetMaterialRenderer = mr;
+            videoPlayer.targetMaterialProperty = "_BaseMap"; 
+        }
+        else
+        {
+            Debug.LogWarning("No MR");
+        }
+
+        videoPlayer.Prepare();
+        yield return new WaitUntil(() => videoPlayer.isPrepared);
+
+        videoPlayer.Play();
+        Debug.Log("Video playing");
+
+        yield return new WaitForSeconds(1f);
+        // empty folder again
+        try
+        {
+            File.Delete(fileLatestMp4.FullName);
+            Debug.Log($"Deleted file: {fileLatestMp4.Name}");
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"Failed to delete file: {e.Message}");
+        }
     }
     
     public static bool IsFileLocked(FileInfo file)
