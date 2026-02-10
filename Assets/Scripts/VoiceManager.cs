@@ -166,7 +166,7 @@ public class VoiceManager : MonoBehaviour
                 prompt = text.Substring(index + "prompt".Length).Trim();
             }
             TtsSpeak("Generating Object with prompt:" + prompt);
-            prompt = prompt + " white background";
+            //prompt = prompt + " white background";
             
             genManager.TranscriptPromptToObject(prompt);
         }
@@ -182,7 +182,7 @@ public class VoiceManager : MonoBehaviour
             
             genManager.TranscriptPromptToImage(prompt);
         }
-        else if (text.Contains("animate"))
+        else if (text.Contains("any mate")) // doesn't understand animate...
         {   
             if (text.Contains("virtual", StringComparison.OrdinalIgnoreCase))
             {

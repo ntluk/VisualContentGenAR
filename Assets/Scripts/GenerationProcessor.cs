@@ -46,6 +46,7 @@ public class GenerationProcessor : MonoBehaviour
         //streamWriter.WriteLine($"python segmentation_workflow.py --x=1260.0 --y=600.0");
         streamWriter.WriteLine($"python segmentation_workflow.py --x=" + x + " --y=" + y);
         UnityEngine.Debug.Log("Writing: " + $"queueing img2obj at (" + x + ", " + y + ")");
+        streamWriter.Flush();
     }
     public void VoiceToMesh(string p)
     {
@@ -55,6 +56,7 @@ public class GenerationProcessor : MonoBehaviour
         
         streamWriter.WriteLine($"python genObjFast.py --p=" + p);
         UnityEngine.Debug.Log("Writing: " + $"queueing txt2obj with prompt:" + p);
+        streamWriter.Flush();
     }
     
     public void VoiceToImage(string p)
@@ -65,6 +67,7 @@ public class GenerationProcessor : MonoBehaviour
         
         streamWriter.WriteLine($"python genImg.py --p=" + p);
         UnityEngine.Debug.Log("Writing: " + $"queueing txt2img with prompt:" + p);
+        streamWriter.Flush();
     }
     
     public void AnimateImage(string i)
@@ -75,5 +78,6 @@ public class GenerationProcessor : MonoBehaviour
         
         streamWriter.WriteLine($"python animImg.py --i=" + i);
         UnityEngine.Debug.Log("Writing: " + $"queueing img2vid");
+        streamWriter.Flush();
     }
 }

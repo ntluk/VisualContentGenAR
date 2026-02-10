@@ -104,7 +104,7 @@ public class ObjectLoader : MonoBehaviour
         
         var gltf2 = object3D2.AddComponent<GLTFast.GltfAsset>();
         gltf2.Url = "file://D://Comfy//ComfyUI_h2_1//ComfyUI//output//mesh//ComfyUI_00001_.glb";
-        gltf2.Load(gltf2.Url);
+        //gltf2.Load(gltf2.Url);
 
         StartCoroutine(MakeGrabbable(object3D2));
     }

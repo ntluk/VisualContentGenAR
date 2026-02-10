@@ -21,7 +21,7 @@ if __name__ == "__main__":
     #prompt_workflow = json.load(open('C:/Projekte/NiklasTluk/VisualContentGenAR/Python/txt2objfast_api.json', 'r', encoding='utf-8'))
     prompt_workflow = json.load(open('D:/Projects/VisualContentGenAR/Python/api/txt2imgfast_api.json', 'r', encoding='utf-8'))
 
-    set_prompt = prompt_workflow["91"]
+    set_prompt = prompt_workflow["6"]
 
     #set_coords["inputs"]["points_store"] = "{\"positive\":[{\"x\":1260.0,\"y\":600.0}],\"negative\":[{\"x\":0,\"y\":0}]}"
     #set_coords["inputs"]["coordinates"] = "[{\"x\":1260.0,\"y\":600.0}]"
