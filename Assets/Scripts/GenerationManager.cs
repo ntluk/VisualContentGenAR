@@ -22,6 +22,7 @@ public class GenerationManager : MonoBehaviour
     private RoomManager room;
     
     private string objectGenerating;
+    public Material genMat;
     
     void Awake()
     {
@@ -93,6 +94,18 @@ public class GenerationManager : MonoBehaviour
     
     public void TranscriptPromptToImage(string prompt)
     {
+        GameObject image = null;
+        image = room.virtualPainting;
+        
+        foreach (Transform child in image.transform)
+        {
+            child.gameObject.SetActive(false);
+            if (child.name == "Frame")
+                child.gameObject.SetActive(true);
+        }
+        
+        image.GetComponent<Renderer>().material = genMat;
+        
         genProcess.VoiceToImage(prompt);
         Debug.LogWarning("txt2img");
         Debug.LogWarning(GameObject.Find("VirtualImage"));
@@ -114,10 +127,21 @@ public class GenerationManager : MonoBehaviour
             image = room.virtualPainting;
 
         }
+        
+        foreach (Transform child in image.transform)
+        {
+            child.gameObject.SetActive(false);
+            if (child.name == "Frame")
+                child.gameObject.SetActive(true);
+        }
+        
+        image.GetComponent<Renderer>().material = genMat;
+        
         genProcess.AnimateImage(imgPath);
         Debug.LogWarning("animImg");
         
         StartCoroutine(LoadVideo(image));
+        
     }
 
     private void ShowObjectPreview()
@@ -278,7 +302,7 @@ public class GenerationManager : MonoBehaviour
         Texture2D texture = LoadTextureFromFile(fileLatestPng.FullName);
         if(!image.GetComponentInChildren<MeshRenderer>())
             Debug.LogWarning("no MR");
-        MeshRenderer mr = image.GetComponentInChildren<MeshRenderer>();
+        MeshRenderer mr = image.GetComponent<MeshRenderer>();
         
         Material mat = new Material(Shader.Find("Universal Render Pipeline/Lit"));
         mat.SetTexture("_BaseMap", texture);
@@ -341,7 +365,7 @@ public class GenerationManager : MonoBehaviour
         videoPlayer.isLooping = true;
 
         // render to material
-        MeshRenderer mr = image.GetComponentInChildren<MeshRenderer>();
+        MeshRenderer mr = image.GetComponent<MeshRenderer>();
         if (mr != null)
         {
             videoPlayer.renderMode = VideoRenderMode.MaterialOverride;

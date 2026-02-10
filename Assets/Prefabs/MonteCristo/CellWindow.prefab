@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 6272760350897677337}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.035, y: -0.085, z: 0.005}
+  m_LocalPosition: {x: 0.035, y: -0.085, z: 0.028000005}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -121,6 +121,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CellWindow
       objectReference: {fileID: 0}
+    - target: {fileID: 5075208498323641632, guid: 3e8205076b8e83040b09145e2bcd00d6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.052
+      objectReference: {fileID: 0}
     - target: {fileID: 6147826009795423660, guid: 3e8205076b8e83040b09145e2bcd00d6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -187,15 +191,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3975022334478391313, guid: abcd4e4952969094c84f79df4c8221d1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.112
+      value: -0.29
       objectReference: {fileID: 0}
     - target: {fileID: 3975022334478391313, guid: abcd4e4952969094c84f79df4c8221d1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.029
+      value: -0.138
       objectReference: {fileID: 0}
     - target: {fileID: 3975022334478391313, guid: abcd4e4952969094c84f79df4c8221d1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.089
+      value: 0.102
       objectReference: {fileID: 0}
     - target: {fileID: 3975022334478391313, guid: abcd4e4952969094c84f79df4c8221d1, type: 3}
       propertyPath: m_LocalRotation.w
