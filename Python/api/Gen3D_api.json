@@ -294,7 +294,7 @@
   },
   "113": {
     "inputs": {
-      "image": "C:\\Comfy\\test images\\1_kI_cbCh6HYSMUqfFAHtK1Q.jpg"
+      "image": ""
     },
     "class_type": "LoadImage",
     "_meta": {

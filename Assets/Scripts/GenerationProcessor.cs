@@ -37,14 +37,14 @@ public class GenerationProcessor : MonoBehaviour
         }
     }
 
-    public void ImageToObject(float x, float y)
+    public void ImageToObject(float x, float y, string i)
     {
         //streamWriter.WriteLine($"D:");
         //streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
         streamWriter.WriteLine($"cd C:\\Projekte\\VisualContentGenAR\\Python");
         
         //streamWriter.WriteLine($"python segmentation_workflow.py --x=1260.0 --y=600.0");
-        streamWriter.WriteLine($"python segmentation_workflow.py --x=" + x + " --y=" + y);
+        streamWriter.WriteLine($"python segmentation_workflow.py --x=" + x + " --y=" + y + " --i" + i);
         UnityEngine.Debug.Log("Writing: " + $"queueing img2obj at (" + x + ", " + y + ")");
         streamWriter.Flush();
     }

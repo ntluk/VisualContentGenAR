@@ -74,8 +74,16 @@ public class GenerationManager : MonoBehaviour
                 lastYCoordObjectInImage = yCoordObjectInImage;
                 xCoordObjectInImageUpdated = false;
                 yCoordObjectInImageUpdated = false;
+                string imgPath = "";
 
-                genProcess.ImageToObject(xCoordObjectInImage, yCoordObjectInImage);
+                if (objectGenerating.Equals("Preview_Peach") || objectGenerating.Equals("Preview_DarkGrape") || objectGenerating.Equals("Preview_Grape") || objectGenerating.Equals("Preview_Fly"))
+                    imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
+                else
+                    imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\1_kI_cbCh6HYSMUqfFAHtK1Q.jpeg";
+           
+
+
+                genProcess.ImageToObject(xCoordObjectInImage, yCoordObjectInImage, imgPath);
                 Debug.LogWarning("img2obj");
                 
                 //SpawnObjectPreview();
