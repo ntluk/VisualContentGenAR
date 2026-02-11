@@ -39,9 +39,9 @@ public class GenerationProcessor : MonoBehaviour
 
     public void ImageToObject(float x, float y)
     {
-        streamWriter.WriteLine($"D:");
-        streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
-        //streamWriter.WriteLine($"cd C:\\Projekte\\VisualContentGenAR\\Python");
+        //streamWriter.WriteLine($"D:");
+        //streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
+        streamWriter.WriteLine($"cd C:\\Projekte\\VisualContentGenAR\\Python");
         
         //streamWriter.WriteLine($"python segmentation_workflow.py --x=1260.0 --y=600.0");
         streamWriter.WriteLine($"python segmentation_workflow.py --x=" + x + " --y=" + y);
@@ -50,9 +50,9 @@ public class GenerationProcessor : MonoBehaviour
     }
     public void VoiceToMesh(string p)
     {
-        streamWriter.WriteLine($"D:");
-        streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
-        //streamWriter.WriteLine($"cd C:\\Projekte\\VisualContentGenAR\\Python");
+        //streamWriter.WriteLine($"D:");
+        //streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
+        streamWriter.WriteLine($"cd C:\\Projekte\\VisualContentGenAR\\Python");
         
         streamWriter.WriteLine($"python genObjFast.py --p=" + p);
         UnityEngine.Debug.Log("Writing: " + $"queueing txt2obj with prompt:" + p);
@@ -61,9 +61,9 @@ public class GenerationProcessor : MonoBehaviour
     
     public void VoiceToImage(string p)
     {
-        streamWriter.WriteLine($"D:");
-        streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
-        //streamWriter.WriteLine($"cd C:\\Projekte\\VisualContentGenAR\\Python");
+        //streamWriter.WriteLine($"D:");
+        //streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
+        streamWriter.WriteLine($"cd C:\\Projekte\\VisualContentGenAR\\Python");
         
         streamWriter.WriteLine($"python genImg.py --p=" + p);
         UnityEngine.Debug.Log("Writing: " + $"queueing txt2img with prompt:" + p);
@@ -72,9 +72,9 @@ public class GenerationProcessor : MonoBehaviour
     
     public void AnimateImage(string i)
     {
-        streamWriter.WriteLine($"D:");
-        streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
-        //streamWriter.WriteLine($"cd C:\\Projekte\\VisualContentGenAR\\Python");
+        //streamWriter.WriteLine($"D:");
+        //streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
+        streamWriter.WriteLine($"cd C:\\Projekte\\VisualContentGenAR\\Python");
         
         streamWriter.WriteLine($"python animImg.py --i=" + i);
         UnityEngine.Debug.Log("Writing: " + $"queueing img2vid");

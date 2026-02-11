@@ -18,8 +18,8 @@ if __name__ == "__main__":
     I = args.i
     
     # load the workflow from file, assign it to variable named prompt_workflow
-    #prompt_workflow = json.load(open('C:/Projekte/NiklasTluk/VisualContentGenAR/Python/txt2objfast_api.json', 'r', encoding='utf-8'))
-    prompt_workflow = json.load(open('D:/Projects/VisualContentGenAR/Python/api/animatePainting_api.json', 'r', encoding='utf-8'))
+    prompt_workflow = json.load(open('C:/Projekte/VisualContentGenAR/Python/api/txt2objfast_api.json', 'r', encoding='utf-8'))
+    #prompt_workflow = json.load(open('D:/Projects/VisualContentGenAR/Python/api/animatePainting_api.json', 'r', encoding='utf-8'))
 
     set_image = prompt_workflow["17"]
 
