@@ -126,14 +126,14 @@ public class GenerationManager : MonoBehaviour
         
         if (type == 0)
         {
-            //imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\1_kI_cbCh6HYSMUqfFAHtK1Q.jpg";
-            imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\1_kI_cbCh6HYSMUqfFAHtK1Q.jpg";
+            imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\1_kI_cbCh6HYSMUqfFAHtK1Q.jpg";
+            //imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\1_kI_cbCh6HYSMUqfFAHtK1Q.jpg";
             image = room.defaultPainting;
         }
         else if (type == 1)
         {
-            //imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
-            imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
+            imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
+            //imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
             image = room.virtualPainting;
 
         }
@@ -169,8 +169,8 @@ public class GenerationManager : MonoBehaviour
         //FileInfo fileLatestGlb = new DirectoryInfo("C:/Comfy/ComfyUI_h2_1/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
         //FileInfo fileLatestGlb = new DirectoryInfo("D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
 
-        //string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D";
-        string path = "C:/ComfyUI_h2_1/ComfyUI/output/3D";
+        string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D";
+        //string path = "C:/ComfyUI_h2_1/ComfyUI/output/3D";
         FileInfo fileLatestGlb = null;
 
         // wait until one file exists
@@ -210,8 +210,8 @@ public class GenerationManager : MonoBehaviour
         //FileInfo fileLatestGlb = new DirectoryInfo("C:/Comfy/ComfyUI_h2_1/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
         //FileInfo fileLatestGlb = new DirectoryInfo("D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
 
-        //string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D";
-        string path = "C:/ComfyUI_h2_1/ComfyUI/output/3D";
+        string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D";
+        //string path = "C:/ComfyUI_h2_1/ComfyUI/output/3D";
         FileInfo fileLatestGlb = null;
 
         // wait until one file exists
@@ -251,8 +251,8 @@ public class GenerationManager : MonoBehaviour
         //FileInfo fileLatestGlb = new DirectoryInfo("C:/Comfy/ComfyUI_h2_1/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
         //FileInfo fileLatestGlb = new DirectoryInfo("D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
 
-        //string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output/mesh";
-        string path = "C:/ComfyUI_h2_1/ComfyUI/output/mesh";
+        string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output/mesh";
+        //string path = "C:/ComfyUI_h2_1/ComfyUI/output/mesh";
         FileInfo fileLatestGlb = null;
 
         // wait until one file exists
@@ -292,8 +292,8 @@ public class GenerationManager : MonoBehaviour
         //FileInfo fileLatestGlb = new DirectoryInfo("C:/Comfy/ComfyUI_h2_1/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
         //FileInfo fileLatestGlb = new DirectoryInfo("D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
         
-        //string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output";
-        string path = "C:/ComfyUI_h2_1/ComfyUI/output";
+        string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output";
+        //string path = "C:/ComfyUI_h2_1/ComfyUI/output";
         FileInfo fileLatestPng;
 
         // wait until one file exists
@@ -342,8 +342,8 @@ public class GenerationManager : MonoBehaviour
         //FileInfo fileLatestGlb = new DirectoryInfo("C:/Comfy/ComfyUI_h2_1/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
         //FileInfo fileLatestGlb = new DirectoryInfo("D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
         
-        //string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output";
-        string path = "C:/ComfyUI_h2_1/ComfyUI/output";
+        string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output";
+        //string path = "C:/ComfyUI_h2_1/ComfyUI/output";
         FileInfo fileLatestMp4;
 
         // wait until one file exists

@@ -1,83 +1,58 @@
-using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
 using System.Diagnostics;
-using System.Threading;
 
 public class GenerationProcessor : MonoBehaviour
 {
-    public Process process;
-    public StreamWriter streamWriter;
-    private Thread thread;
-
-    private List<string> liLines = new List<string>();
-    private List<string> liErrors = new List<string>();
-    
-    public void Start()
+    private void RunComfy(string args)
     {
-        process = new Process
+        Process process = new Process();
+        process.StartInfo = new ProcessStartInfo
         {
-            StartInfo = new ProcessStartInfo
-            {
-                FileName = "cmd.exe",
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            }
+            FileName = "python",
+            Arguments = args,
+            WorkingDirectory = @"D:\Projects\VisualContentGenAR\Python",
+            //WorkingDirectory = @"C:\Projekte\VisualContentGenAR\Python",
+            UseShellExecute = false,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            CreateNoWindow = true
         };
         
+        process.OutputDataReceived += (s, e) => {
+            if (!string.IsNullOrEmpty(e.Data))
+                UnityEngine.Debug.Log(e.Data);
+        };
+
+        process.ErrorDataReceived += (s, e) => {
+            if (!string.IsNullOrEmpty(e.Data))
+                UnityEngine.Debug.LogError(e.Data);
+        };
+
         process.Start();
         process.BeginOutputReadLine();
-
-        streamWriter = process.StandardInput;
-        if (streamWriter.BaseStream.CanWrite)
-        {
-            //RunCI();
-        }
+        process.BeginErrorReadLine();
     }
 
     public void ImageToObject(float x, float y, string i)
     {
-        //streamWriter.WriteLine($"D:");
-        //streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
-        streamWriter.WriteLine($"cd C:\\Projekte\\VisualContentGenAR\\Python");
-        
-        //streamWriter.WriteLine($"python segmentation_workflow.py --x=1260.0 --y=600.0");
-        streamWriter.WriteLine($"python segmentation_workflow.py --x=" + x + " --y=" + y + " --i" + i);
-        UnityEngine.Debug.Log("Writing: " + $"queueing img2obj at (" + x + ", " + y + ")");
-        streamWriter.Flush();
+        RunComfy($"segmentation_workflow.py --x={x} --y={y} --i=\"{i}\"");
+        UnityEngine.Debug.Log($"queueing img2obj at ({x}, {y})");
     }
     public void VoiceToMesh(string p)
     {
-        //streamWriter.WriteLine($"D:");
-        //streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
-        streamWriter.WriteLine($"cd C:\\Projekte\\VisualContentGenAR\\Python");
-        
-        streamWriter.WriteLine($"python genObjFast.py --p=" + p);
-        UnityEngine.Debug.Log("Writing: " + $"queueing txt2obj with prompt:" + p);
-        streamWriter.Flush();
+        RunComfy($"genObjFast.py --p=\"{p}\"");
+        UnityEngine.Debug.Log($"queueing txt2obj with prompt: {p}");
     }
     
     public void VoiceToImage(string p)
     {
-        //streamWriter.WriteLine($"D:");
-        //streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
-        streamWriter.WriteLine($"cd C:\\Projekte\\VisualContentGenAR\\Python");
-        
-        streamWriter.WriteLine($"python genImg.py --p=" + p);
-        UnityEngine.Debug.Log("Writing: " + $"queueing txt2img with prompt:" + p);
-        streamWriter.Flush();
+        RunComfy($"genImg.py --p=\"{p}\"");
+        UnityEngine.Debug.Log($"queueing txt2img with prompt: {p}");
     }
     
     public void AnimateImage(string i)
     {
-        //streamWriter.WriteLine($"D:");
-        //streamWriter.WriteLine($"cd D:\\Projects\\VisualContentGenAR\\Python");
-        streamWriter.WriteLine($"cd C:\\Projekte\\VisualContentGenAR\\Python");
-        
-        streamWriter.WriteLine($"python animImg.py --i=" + i);
-        UnityEngine.Debug.Log("Writing: " + $"queueing img2vid");
-        streamWriter.Flush();
+        RunComfy($"animImg.py --i=\"{i}\"");
+        UnityEngine.Debug.Log("queueing img2vid");
     }
 }

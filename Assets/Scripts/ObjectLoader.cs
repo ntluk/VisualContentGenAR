@@ -32,8 +32,8 @@ public class ObjectLoader : MonoBehaviour
 
         object3D2.transform.localScale = preview.transform.localScale;
         var gltf2 = object3D2.AddComponent<GLTFast.GltfAsset>();
-        //gltf2.Url = "file://D://Comfy//ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh_00001_.glb";
-        gltf2.Url = "file://C://ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh_00001_.glb";
+        gltf2.Url = "file://D://Comfy//ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh_00001_.glb";
+        //gltf2.Url = "file://C://ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh_00001_.glb";
         gltf2.Load(gltf2.Url);
         Destroy(preview);
 
@@ -86,8 +86,8 @@ public class ObjectLoader : MonoBehaviour
         object3D2.transform.eulerAngles = objEuler;
         object3D2.transform.localScale = untextured.transform.localScale;
         var gltf2 = object3D2.AddComponent<GLTFast.GltfAsset>();
-        //gltf2.Url = "file://D://Comfy//ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh.glb";
-        gltf2.Url = "file://C://ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh.glb";
+        gltf2.Url = "file://D://Comfy//ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh.glb";
+        //gltf2.Url = "file://C://ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh.glb";
         //gltf2.Load(gltf2.Url);
         Destroy(untextured);
         
@@ -105,8 +105,8 @@ public class ObjectLoader : MonoBehaviour
         object3D2.transform.eulerAngles = meshEuler;
         
         var gltf2 = object3D2.AddComponent<GLTFast.GltfAsset>();
-        //gltf2.Url = "file://D://Comfy//ComfyUI_h2_1//ComfyUI//output//mesh//ComfyUI_00001_.glb";
-        gltf2.Url = "file://C://ComfyUI_h2_1//ComfyUI//output//mesh//ComfyUI_00001_.glb";
+        gltf2.Url = "file://D://Comfy//ComfyUI_h2_1//ComfyUI//output//mesh//ComfyUI_00001_.glb";
+        //gltf2.Url = "file://C://ComfyUI_h2_1//ComfyUI//output//mesh//ComfyUI_00001_.glb";
         //gltf2.Load(gltf2.Url);
 
         StartCoroutine(MakeGrabbable(object3D2));
