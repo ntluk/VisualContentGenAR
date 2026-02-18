@@ -77,10 +77,11 @@ public class GenerationManager : MonoBehaviour
                 string imgPath = "";
 
                 if (objectGenerating.Equals("Preview_Peach") || objectGenerating.Equals("Preview_DarkGrape") || objectGenerating.Equals("Preview_Grape") || objectGenerating.Equals("Preview_Fly"))
-                    imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
+                    imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
+                    //imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
                 else
-                    imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\1_kI_cbCh6HYSMUqfFAHtK1Q.jpeg";
-           
+                    imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\1_kI_cbCh6HYSMUqfFAHtK1Q.jpeg";
+                    //imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\1_kI_cbCh6HYSMUqfFAHtK1Q.jpeg";
 
 
                 genProcess.ImageToObject(xCoordObjectInImage, yCoordObjectInImage, imgPath);
