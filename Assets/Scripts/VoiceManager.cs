@@ -294,7 +294,7 @@ public class VoiceManager : MonoBehaviour
         
         EnqueueParagraph(
             "Nineteen years of light to reflect upon in eternal darkness!",
-            () => roomManager.wallFaceSpawner.enabled = true
+            null
         );
         
         EnqueueParagraph(
@@ -311,7 +311,6 @@ public class VoiceManager : MonoBehaviour
             "He clung to one idea -- ",
             () => roomManager.wallFaceSpawner.enabled = true
         );
-        
         
         EnqueueParagraph(
             "that of his happiness, destroyed, without apparent cause, by an unheard-of fatality;",
@@ -386,18 +385,53 @@ public class VoiceManager : MonoBehaviour
         });
         
         milestones.Add(new ReadingMilestone {
-            triggerPhrases = new[] { "light of the imagination", "imagination" },
+            triggerPhrases = new[] { "bring to life", "nations" },
+            onTrigger = () => roomManager.plantSpawner.enabled = true
+        });
+        
+        milestones.Add(new ReadingMilestone {
+            triggerPhrases = new[] { "rebuild the ancient cities", "imagination" },
+            onTrigger = () => roomManager.screenSpawner.enabled = true
+        });
+        
+        milestones.Add(new ReadingMilestone {
+            triggerPhrases = new[] { "pass before the eye", "pictures" },
+            onTrigger = () => roomManager.otherSpawner.enabled = true
+        });
+        
+        milestones.Add(new ReadingMilestone {
+            triggerPhrases = new[] { "could not do this", "past" },
             onTrigger = () => roomManager.ceilingSpawner.enabled = true
         });
         
         milestones.Add(new ReadingMilestone {
-            triggerPhrases = new[] { "present so melancholy", "present" },
+            triggerPhrases = new[] { "whose present", "his future" },
+            onTrigger = () => roomManager.lampSpawner.enabled = true
+        });
+        
+        milestones.Add(new ReadingMilestone {
+            triggerPhrases = new[] { "distraction", "aid" },
+            onTrigger = () => roomManager.bedSpawner.enabled = true
+        });
+        
+        milestones.Add(new ReadingMilestone {
+            triggerPhrases = new[] { "spirit", "eagle" },
             onTrigger = () => roomManager.floorSpawner.enabled = true
         });
 
         milestones.Add(new ReadingMilestone {
-            triggerPhrases = new[] { "eternal darkness", "darkness" },
+            triggerPhrases = new[] { "He clung to one idea", "idea" },
             onTrigger = () => roomManager.wallFaceSpawner.enabled = true
+        });
+        
+        milestones.Add(new ReadingMilestone {
+            triggerPhrases = new[] { "happiness", "cause" },
+            onTrigger = () => roomManager.windowSpawner.enabled = true
+        });
+
+        milestones.Add(new ReadingMilestone {
+            triggerPhrases = new[] { "skull", "inferno" },
+            onTrigger = () => roomManager.doorSpawner.enabled = true
         });
     }
     
