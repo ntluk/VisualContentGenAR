@@ -23,6 +23,8 @@ public class GenerationManager : MonoBehaviour
     
     private string objectGenerating;
     public Material genMat;
+
+    private bool loading = false;
     
     void Awake()
     {
@@ -89,7 +91,8 @@ public class GenerationManager : MonoBehaviour
                 
                 //SpawnObjectPreview();
                 ShowObjectPreview();
-                StartCoroutine(LoadObjectUntexturedFirst(objectGenerating));
+                if (!loading)
+                    StartCoroutine(LoadObjectUntexturedFirst(objectGenerating));
             }
         }
     }
@@ -162,6 +165,7 @@ public class GenerationManager : MonoBehaviour
     
     private IEnumerator LoadObjectUntexturedFirst(string obj)
     {
+        loading = true;
         yield return StartCoroutine(LoadObjectUntextured(obj)); 
         yield return StartCoroutine(LoadObject()); 
     }
@@ -204,6 +208,8 @@ public class GenerationManager : MonoBehaviour
         {
             Debug.LogWarning($"Failed to delete file: {e.Message}");
         }
+
+        loading = false;
     }
 
     public IEnumerator LoadObjectUntextured(string obj)
@@ -249,6 +255,7 @@ public class GenerationManager : MonoBehaviour
     
     public IEnumerator LoadMesh()
     {
+        loading = true;
         //FileInfo fileLatestGlb = new DirectoryInfo("C:/Comfy/ComfyUI_h2_1/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
         //FileInfo fileLatestGlb = new DirectoryInfo("D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
 
@@ -286,10 +293,12 @@ public class GenerationManager : MonoBehaviour
         {
             Debug.LogWarning($"Failed to delete file: {e.Message}");
         }
+        loading = false;
     }
     
     public IEnumerator LoadImage(GameObject image)
     {
+        loading = true;
         //FileInfo fileLatestGlb = new DirectoryInfo("C:/Comfy/ComfyUI_h2_1/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
         //FileInfo fileLatestGlb = new DirectoryInfo("D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
         
@@ -336,10 +345,13 @@ public class GenerationManager : MonoBehaviour
         {
             Debug.LogWarning($"Failed to delete file: {e.Message}");
         }
+
+        loading = false;
     }
     
     public IEnumerator LoadVideo(GameObject image)
     {
+        loading = true;
         //FileInfo fileLatestGlb = new DirectoryInfo("C:/Comfy/ComfyUI_h2_1/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
         //FileInfo fileLatestGlb = new DirectoryInfo("D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
         
@@ -410,6 +422,7 @@ public class GenerationManager : MonoBehaviour
         {
             Debug.LogWarning($"Failed to delete file: {e.Message}");
         }
+        loading = false;
     }
     
     public static bool IsFileLocked(FileInfo file)
