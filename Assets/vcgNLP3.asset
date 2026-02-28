@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8533823039151574606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1c2918ba0e7451694416d42d69e0944, type: 3}
-  m_Name: WitComposerData
-  m_EditorClassIdentifier: 
-  canvases: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23,143 +10,81 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae5a46bda3295124c99b0e6537ac7252, type: 3}
-  m_Name: NLP
+  m_Name: vcgNLP3
   m_EditorClassIdentifier: 
-  _clientAccessToken: VEEPP4J4GWF23FU6EY52XSVQQDOXKARJ
+  _clientAccessToken: WXMZGNDL44VDZFEQZPCMS3PO4SCGLZU5
   editorVersionTag: 
   buildVersionTag: 
   _appInfo:
-    name: vcg_ar
-    id: 1856315068424733
-    lang: de
+    name: vcg_ar3
+    id: 1233551921692294
+    lang: en
     isPrivate: 1
-    createdAt: 2025-10-29T07:45:28-0700
-    trainingStatus: 3
-    lastTrainDuration: 239
-    lastTrainedAt: 2026-01-05T07:22:10-0800
-    nextTrainAt: 2026-01-07T00:41:13-0800
+    createdAt: 2026-02-28T04:21:56-0800
+    trainingStatus: 1
+    lastTrainDuration: 324
+    lastTrainedAt: 2026-02-28T04:47:32-0800
+    nextTrainAt: 2026-02-28T04:42:08-0800
     intents:
-    - id: 709046788756218
-      name: anim_img
-      entities:
-      - name: anim_img:anim_img
-        id: 912153584512574
-    - id: 909306884929484
-      name: anim_vimg
-      entities:
-      - name: anim_vimg:anim_vimg
-        id: 1329402919231104
-    - id: 1376088920972573
+    - id: 1625987551960470
       name: gen_img
       entities:
-      - name: gen_img:gen_img
-        id: 1561072425180537
-    - id: 2480088906166339
+      - name: image:image
+        id: 933661719085403
+      - name: prompt:prompt
+        id: 830697406096333
+    - id: 1434598961469552
       name: gen_obj
       entities:
-      - name: gen_obj:gen_obj
-        id: 917881344240165
-    - id: 707998968844865
-      name: imrv_reading
-      entities:
-      - name: imrv_reading:imrv_reading
-        id: 2352260205218010
-    - id: 1203694561291032
+      - name: object:object
+        id: 720228711055724
+      - name: prompt:prompt
+        id: 830697406096333
+    - id: 921580417497797
       name: wake_word
-      entities:
-      - name: wake_word:wake_word
-        id: 1328589362635336
+      entities: []
     entities:
-    - name: anim_img
-      id: 765697506057925
+    - name: image
+      id: 934944379040513
       lookups:
       - free-text
       - keywords
       roles:
-      - name: anim_img
-        id: 912153584512574
+      - name: image
+        id: 933661719085403
       keywords:
-      - keyword: animiere das echte Bild
+      - keyword: image
         synonyms:
-        - animiere das echte bild
-    - name: anim_vimg
-      id: 1362932355016617
+        - image
+      - keyword: picture
+        synonyms:
+        - picture
+    - name: object
+      id: 1475603567570983
       lookups:
       - free-text
       - keywords
       roles:
-      - name: anim_vimg
-        id: 1329402919231104
+      - name: object
+        id: 720228711055724
       keywords:
-      - keyword: animiere das virtuelle Bild
+      - keyword: object
         synonyms:
-        - animiere das virtuelle bild
-    - name: gen_img
-      id: 1145627814312742
+        - object
+    - name: prompt
+      id: 1427865982365385
       lookups:
       - free-text
       - keywords
       roles:
-      - name: gen_img
-        id: 1561072425180537
+      - name: prompt
+        id: 830697406096333
       keywords:
-      - keyword: generiere ein Bild mit der Prompt
+      - keyword: prompt
         synonyms:
-        - generiere ein bild mit der prompt
-      - keyword: generiere ein Bild mit der folgenden Prompt
-        synonyms:
-        - generiere ein bild mit der folgenden prompt
-    - name: gen_obj
-      id: 1535176484360656
-      lookups:
-      - free-text
-      - keywords
-      roles:
-      - name: gen_obj
-        id: 917881344240165
-      keywords:
-      - keyword: "generiere ein Model f\xFCr"
-        synonyms:
-        - "generiere ein model f\xFCr"
-    - name: imrv_reading
-      id: 1032539409066259
-      lookups:
-      - free-text
-      - keywords
-      roles:
-      - name: imrv_reading
-        id: 2352260205218010
-      keywords:
-      - keyword: Ich lese vor
-        synonyms:
-        - ich lese vor
-    - name: wake_word
-      id: 1584661596183094
-      lookups:
-      - free-text
-      - keywords
-      roles:
-      - name: wake_word
-        id: 1328589362635336
-      keywords:
-      - keyword: computah
-        synonyms:
-        - computah
-      - keyword: computer
-        synonyms:
-        - computer
-      - keyword: computor
-        synonyms:
-        - computor
-      - keyword: computur
-        synonyms:
-        - computur
+        - prompt
     traits: []
-    versionTags:
-    - name: 0.1
-      created_at: 2026-01-05T09:00:13-0800
-      updated_at: 2026-01-05T09:00:15-0800
-      desc: 
+    versionTags: []
     voices:
     - name: wit$British Butler
       locale: en_GB
@@ -667,8 +592,8 @@ MonoBehaviour:
       - phoneme_events
       - word_events
   _configData:
-  - {fileID: -8533823039151574606}
-  _configurationId: 8a60b08d-66b9-4e92-abf3-4ae48d098e9d
+  - {fileID: 8845910287905496468}
+  _configurationId: da1a4499-d4d3-4867-9963-df215820bf78
   _requestType: 0
   _requestTimeoutMs: 10000
   endpointConfiguration:
@@ -685,6 +610,19 @@ MonoBehaviour:
   isDemoOnly: 0
   useIntentAttributes: 1
   useConduit: 0
-  _manifestLocalPath: ConduitManifest-4bb5dd75-42c3-45e0-9be7-8f6e19e17aed.json
+  _manifestLocalPath: ConduitManifest-64b52725-edf8-4e1b-96c7-d16df86329dd.json
   excludedAssemblies: []
-  relaxedResolution: 1
+  relaxedResolution: 0
+--- !u!114 &8845910287905496468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1c2918ba0e7451694416d42d69e0944, type: 3}
+  m_Name: WitComposerData
+  m_EditorClassIdentifier: 
+  canvases: []

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Meta.WitAi.TTS.Data;
 using Meta.WitAi.TTS.Utilities;
 using UnityEngine;
@@ -56,6 +57,8 @@ public class VoiceManager : MonoBehaviour
     int currentMilestone = 0;
     List<ReadingMilestone> milestones = new List<ReadingMilestone>();
     
+    private TaskCompletionSource<string> generationPrompt;
+    
     public class ReadingMilestone
     {
         public string[] triggerPhrases;
@@ -101,12 +104,12 @@ public class VoiceManager : MonoBehaviour
         }
         else
         {
-            // Check Transcript for wake word
+            // check Transcript for wake word
             foreach (string wakeWord in wakeWords)
             {
                 if (text.Contains(wakeWord))
                 {
-                    // Start listening for commands
+                    // start listening for commands
                     listening = true;
                     // play sound effect
                     wakeWordDetected.Invoke();
@@ -122,7 +125,7 @@ public class VoiceManager : MonoBehaviour
                 }
             }
 
-            // Execute voice command
+            // execute voice command
             if (listening && !string.IsNullOrWhiteSpace(text))
             {
                 listening = false;
@@ -141,77 +144,89 @@ public class VoiceManager : MonoBehaviour
 
     public void ExecuteCommand(string text)
     {
-        //if (text.Contains("audiobook mode"))
+        text = text.ToLower();
+        string type = "";
+        
         if (text.Contains("audiobook"))
         {
             TtsSpeak(
                 "Starting immersive audiobook mode.",
                 () => ImmersiveAudiobook("Count")
             );
+            return;
         }
-        //else if (text.Contains("reading mode"))
         else if (text.Contains("reading"))
         {
             TtsSpeak(
                 "Starting immersive reading mode.",
                 () => ImmersiveReading("Count")
             );
+            return;
         }
-        else if (text.Contains("object"))
-        {   
-            string prompt = "";
-            if (text.Contains("prompt", StringComparison.OrdinalIgnoreCase))
-            {
-                int index = text.IndexOf("prompt", StringComparison.OrdinalIgnoreCase);
-                prompt = text.Substring(index + "prompt".Length).Trim();
-            }
-            TtsSpeak("Generating Object with prompt:" + prompt);
-            //prompt = prompt + " white background";
-            
-            genManager.TranscriptPromptToObject(prompt);
-        }
-        else if (text.Contains("image"))
-        {   
-            string prompt = "";
-            if (text.Contains("prompt", StringComparison.OrdinalIgnoreCase))
-            {
-                int index = text.IndexOf("prompt", StringComparison.OrdinalIgnoreCase);
-                prompt = text.Substring(index + "prompt".Length).Trim();
-            }
-            TtsSpeak("Generating Image with prompt:" + prompt);
-            
-            genManager.TranscriptPromptToImage(prompt);
-        }
-        else if (text.Contains("any mate")) // doesn't understand animate...
-        {   
-            if (text.Contains("virtual", StringComparison.OrdinalIgnoreCase))
-            {
-                genManager.AnimatePainting("", 1);
-                TtsSpeak("Animating virtual Image.");
-            }
-            else if (text.Contains("real", StringComparison.OrdinalIgnoreCase))
-            {
-                genManager.AnimatePainting("", 0);
-                TtsSpeak("Animating real Image.");
-            }
-        }
-        else if (text.Contains("drawing mode"))
+        
+        if (text.Contains("object") && (text.Contains("create") || text.Contains("generate"))) 
+            type = "object";
+        else if (text.Contains("image") && (text.Contains("create") || text.Contains("generate") || text.Contains("draw")))
+            type = "image";
+
+        if (!string.IsNullOrEmpty(type))
         {
-            TtsSpeak("Due to camera feed access limitaion this mode is not available over quest link!");
+            ExtractPrompt(text, type);
+            return;
         }
-        else if (text.Contains("stop"))
+        
+        if (text.Contains("animate") || text.Contains("any mate") || text.Contains("any made")) 
         {
-            // stop
-            // just change mode instead
+            if (text.Contains("virtual")) { genManager.AnimatePainting("", 1); TtsSpeak("Animating virtual Image."); }
+            else if (text.Contains("real")) { genManager.AnimatePainting("", 0); TtsSpeak("Animating real Image."); }
+            return;
         }
-        else if (text.Contains("thank you"))
+
+        if (text.Contains("drawing mode"))
         {
-            TtsSpeak("No Biggie!");
+            TtsSpeak("Due to camera feed access limitation this mode is not available over quest link!");
+            return;
+        }
+        
+        if (text.Contains("thank you"))
+        { 
+            TtsSpeak("No Biggie!"); 
+            return; 
+        }
+        
+        if (text.Contains("stop")) 
+            return;
+        
+        TtsSpeak("Sorry, I didn’t quite catch that.");
+    }
+    
+    private async void ExtractPrompt(string text, string type)
+    {
+        string prompt = "";
+        
+        if (text.Contains("prompt"))
+        {
+            int index = text.IndexOf("prompt", StringComparison.OrdinalIgnoreCase);
+            prompt = text.Substring(index + "prompt".Length).Trim();
         }
         else
         {
-            TtsSpeak("Sorry, I didn’t quite catch that.");
+            int index = text.IndexOf(type, StringComparison.OrdinalIgnoreCase);
+            prompt = text.Substring(index + type.Length).Trim();
         }
+        
+        if (string.IsNullOrWhiteSpace(prompt))
+        {
+            TtsSpeak($"Please say the prompt for the {type}.");
+            prompt = await WaitForUserPrompt();
+        }
+
+        TtsSpeak($"Generating {type} with prompt: {prompt}");
+
+        if (type == "object")
+            genManager.TranscriptPromptToObject(prompt);
+        else
+            genManager.TranscriptPromptToImage(prompt);
     }
     
     private void TtsSpeak(string message)
@@ -245,6 +260,28 @@ public class VoiceManager : MonoBehaviour
             ttsCallback.Invoke();
             ttsCallback = null;
         }
+    }
+
+    private async Task<string> WaitForUserPrompt()
+    {
+        appVoiceExperience.Activate();
+
+        generationPrompt = new TaskCompletionSource<string>();
+        
+        void OnPromptTranscription(string transcript)
+        {
+            if (!string.IsNullOrWhiteSpace(transcript))
+            {
+                generationPrompt.SetResult(transcript);
+                appVoiceExperience.VoiceEvents.OnFullTranscription.RemoveListener(OnPromptTranscription);
+            }
+        }
+
+        appVoiceExperience.VoiceEvents.OnFullTranscription.AddListener(OnPromptTranscription);
+        
+        string result = await generationPrompt.Task;
+
+        return result;
     }
 
     private void ImmersiveAudiobook(string title)
@@ -405,7 +442,7 @@ public class VoiceManager : MonoBehaviour
         });
         
         milestones.Add(new ReadingMilestone {
-            triggerPhrases = new[] { "whose present", "his future" },
+            triggerPhrases = new[] { "whose present", "future" },
             onTrigger = () => roomManager.lampSpawner.enabled = true
         });
         
