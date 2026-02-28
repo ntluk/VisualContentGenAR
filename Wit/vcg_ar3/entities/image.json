@@ -1,0 +1,24 @@
+{
+    "name": "image",
+    "roles": [
+        "image"
+    ],
+    "lookups": [
+        "free-text",
+        "keywords"
+    ],
+    "keywords": [
+        {
+            "keyword": "image",
+            "synonyms": [
+                "image"
+            ]
+        },
+        {
+            "keyword": "picture",
+            "synonyms": [
+                "picture"
+            ]
+        }
+    ]
+}

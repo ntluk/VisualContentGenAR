@@ -1,0 +1,7 @@
+{
+    "name": "gen_img",
+    "entities": [
+        "image:image",
+        "prompt:prompt"
+    ]
+}

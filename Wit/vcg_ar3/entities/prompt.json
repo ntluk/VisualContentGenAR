@@ -1,0 +1,18 @@
+{
+    "name": "prompt",
+    "roles": [
+        "prompt"
+    ],
+    "lookups": [
+        "free-text",
+        "keywords"
+    ],
+    "keywords": [
+        {
+            "keyword": "prompt",
+            "synonyms": [
+                "prompt"
+            ]
+        }
+    ]
+}

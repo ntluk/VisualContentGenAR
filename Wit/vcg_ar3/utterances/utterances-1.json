@@ -1,0 +1,201 @@
+{
+    "utterances": [
+        {
+            "text": "Create a picture",
+            "entities": [
+                {
+                    "entity": "image:image",
+                    "start": 9,
+                    "end": 16,
+                    "body": "picture",
+                    "entities": []
+                }
+            ],
+            "traits": [],
+            "intent": "gen_img"
+        },
+        {
+            "text": "Draw a picture",
+            "entities": [
+                {
+                    "entity": "image:image",
+                    "start": 7,
+                    "end": 14,
+                    "body": "picture",
+                    "entities": []
+                }
+            ],
+            "traits": [],
+            "intent": "gen_img"
+        },
+        {
+            "text": "Generate an image",
+            "entities": [
+                {
+                    "entity": "image:image",
+                    "start": 12,
+                    "end": 17,
+                    "body": "image",
+                    "entities": []
+                }
+            ],
+            "traits": [],
+            "intent": "gen_img"
+        },
+        {
+            "text": "Generate an object",
+            "entities": [
+                {
+                    "entity": "object:object",
+                    "start": 12,
+                    "end": 18,
+                    "body": "object",
+                    "entities": []
+                }
+            ],
+            "traits": [],
+            "intent": "gen_obj"
+        },
+        {
+            "text": "animate image",
+            "entities": [
+                {
+                    "entity": "image:image",
+                    "start": 8,
+                    "end": 13,
+                    "body": "image",
+                    "entities": []
+                }
+            ],
+            "traits": [],
+            "intent": "anim"
+        },
+        {
+            "text": "computa",
+            "entities": [],
+            "traits": [],
+            "intent": "wake_word"
+        },
+        {
+            "text": "computah",
+            "entities": [],
+            "traits": [],
+            "intent": "wake_word"
+        },
+        {
+            "text": "computer",
+            "entities": [],
+            "traits": [],
+            "intent": "wake_word"
+        },
+        {
+            "text": "computor",
+            "entities": [],
+            "traits": [],
+            "intent": "wake_word"
+        },
+        {
+            "text": "create a picture",
+            "entities": [
+                {
+                    "entity": "image:image",
+                    "start": 9,
+                    "end": 16,
+                    "body": "picture",
+                    "entities": []
+                }
+            ],
+            "traits": [],
+            "intent": "gen_img"
+        },
+        {
+            "text": "draw a picture",
+            "entities": [
+                {
+                    "entity": "image:image",
+                    "start": 7,
+                    "end": 14,
+                    "body": "picture",
+                    "entities": []
+                }
+            ],
+            "traits": [],
+            "intent": "gen_img"
+        },
+        {
+            "text": "generate an image",
+            "entities": [
+                {
+                    "entity": "image:image",
+                    "start": 12,
+                    "end": 17,
+                    "body": "image",
+                    "entities": []
+                }
+            ],
+            "traits": [],
+            "intent": "gen_img"
+        },
+        {
+            "text": "generate an image with the prompt",
+            "entities": [
+                {
+                    "entity": "image:image",
+                    "start": 12,
+                    "end": 17,
+                    "body": "image",
+                    "entities": []
+                },
+                {
+                    "entity": "prompt:prompt",
+                    "start": 27,
+                    "end": 33,
+                    "body": "prompt",
+                    "entities": []
+                }
+            ],
+            "traits": [],
+            "intent": "gen_img"
+        },
+        {
+            "text": "generate an object",
+            "entities": [
+                {
+                    "entity": "object:object",
+                    "start": 12,
+                    "end": 18,
+                    "body": "object",
+                    "entities": []
+                }
+            ],
+            "traits": [],
+            "intent": "gen_obj"
+        },
+        {
+            "text": "generate an object with the prompt",
+            "entities": [
+                {
+                    "entity": "object:object",
+                    "start": 12,
+                    "end": 18,
+                    "body": "object",
+                    "entities": []
+                }
+            ],
+            "traits": [],
+            "intent": "gen_obj"
+        },
+        {
+            "text": "hello computer",
+            "entities": [],
+            "traits": [],
+            "intent": "wake_word"
+        },
+        {
+            "text": "hey computer",
+            "entities": [],
+            "traits": [],
+            "intent": "wake_word"
+        }
+    ]
+}

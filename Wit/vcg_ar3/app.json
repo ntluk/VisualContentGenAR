@@ -1,0 +1,7 @@
+{
+    "version": 20200513,
+    "zip-command": "zip vcg_ar3.zip vcg_ar3\/app.json vcg_ar3\/entities\/*.json vcg_ar3\/intents\/*.json vcg_ar3\/traits\/*.json vcg_ar3\/utterances\/*.json vcg_ar3\/composer\/*.json",
+    "name": "vcg_ar3",
+    "lang": "en",
+    "timezone": "America\/Los_Angeles"
+}
