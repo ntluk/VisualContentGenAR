@@ -177,8 +177,16 @@ public class VoiceManager : MonoBehaviour
         
         if (text.Contains("animate") || text.Contains("any mate") || text.Contains("any made")) 
         {
-            if (text.Contains("virtual")) { genManager.AnimatePainting("", 1); TtsSpeak("Animating virtual Image."); }
-            else if (text.Contains("real")) { genManager.AnimatePainting("", 0); TtsSpeak("Animating real Image."); }
+            if (text.Contains("virtual"))
+            {
+                genManager.AnimatePainting("", 1); 
+                TtsSpeak("Animating virtual Image.");
+            }
+            else if (text.Contains("real"))
+            {
+                genManager.AnimatePainting("", 0); 
+                TtsSpeak("Animating real Image.");
+            }
             return;
         }
 

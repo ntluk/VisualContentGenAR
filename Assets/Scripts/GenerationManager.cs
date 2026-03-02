@@ -7,6 +7,7 @@ using Meta.XR.BuildingBlocks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using UnityEditor;
 
 public class GenerationManager : MonoBehaviour
 {
@@ -127,16 +128,18 @@ public class GenerationManager : MonoBehaviour
     public void AnimatePainting(string imgPath, int type)
     {
         GameObject image = null;
+        Renderer renderer;
+        Texture tex;
         
         if (type == 0)
         {
-            imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\1_kI_cbCh6HYSMUqfFAHtK1Q.jpg";
+            //imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\1_kI_cbCh6HYSMUqfFAHtK1Q.jpg";
             //imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\1_kI_cbCh6HYSMUqfFAHtK1Q.jpg";
             image = room.defaultPainting;
         }
         else if (type == 1)
         {
-            imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
+            //imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
             //imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
             image = room.virtualPainting;
 
@@ -149,13 +152,16 @@ public class GenerationManager : MonoBehaviour
                 child.gameObject.SetActive(true);
         }
         
-        image.GetComponent<Renderer>().material = genMat;
+        renderer = image.GetComponent<Renderer>();
+        tex = renderer.material.mainTexture;
+        imgPath = AssetDatabase.GetAssetPath(tex);
+        
+        renderer.material = genMat;
         
         genProcess.AnimateImage(imgPath);
         Debug.LogWarning("animImg");
         
         StartCoroutine(LoadVideo(image));
-        
     }
 
     private void ShowObjectPreview()
@@ -323,7 +329,15 @@ public class GenerationManager : MonoBehaviour
         yield return new WaitUntil(() => !IsFileLocked(fileLatestPng));
         yield return new WaitForSeconds(0.1f);
         
-        Texture2D texture = LoadTextureFromFile(fileLatestPng.FullName);
+        // copy file into project folder
+        string copy = Path.Combine(
+            Application.persistentDataPath,
+            fileLatestPng.Name
+        );
+
+        File.Copy(fileLatestPng.FullName, copy, true);
+        
+        Texture2D texture = LoadTextureFromFile(copy);
         if(!image.GetComponentInChildren<MeshRenderer>())
             Debug.LogWarning("no MR");
         MeshRenderer mr = image.GetComponent<MeshRenderer>();
