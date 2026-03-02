@@ -154,7 +154,8 @@ public class GenerationManager : MonoBehaviour
         
         renderer = image.GetComponent<Renderer>();
         tex = renderer.material.mainTexture;
-        imgPath = AssetDatabase.GetAssetPath(tex);
+        imgPath = Path.GetFullPath(AssetDatabase.GetAssetPath(tex));
+        Debug.LogWarning(imgPath);
         
         renderer.material = genMat;
         
@@ -175,6 +176,7 @@ public class GenerationManager : MonoBehaviour
         yield return StartCoroutine(LoadObjectUntextured(obj)); 
         yield return StartCoroutine(LoadObject()); 
     }
+    
     public IEnumerator LoadObject()
     {
         //FileInfo fileLatestGlb = new DirectoryInfo("C:/Comfy/ComfyUI_h2_1/ComfyUI/output").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
@@ -337,8 +339,11 @@ public class GenerationManager : MonoBehaviour
 
         File.Copy(fileLatestPng.FullName, copy, true);
         
+        if (image.GetComponent<VideoPlayer>())
+            Destroy(image.GetComponent<VideoPlayer>());
+        
         Texture2D texture = LoadTextureFromFile(copy);
-        if(!image.GetComponentInChildren<MeshRenderer>())
+        if(!image.GetComponent<MeshRenderer>())
             Debug.LogWarning("no MR");
         MeshRenderer mr = image.GetComponent<MeshRenderer>();
         
@@ -407,9 +412,14 @@ public class GenerationManager : MonoBehaviour
         videoPlayer.isLooping = true;
 
         // render to material
+        Material renderMat = new Material(
+            Shader.Find("Universal Render Pipeline/Lit")
+        );
         MeshRenderer mr = image.GetComponent<MeshRenderer>();
+        
         if (mr != null)
         {
+            mr.material = renderMat;
             videoPlayer.renderMode = VideoRenderMode.MaterialOverride;
             videoPlayer.targetMaterialRenderer = mr;
             videoPlayer.targetMaterialProperty = "_BaseMap"; 
