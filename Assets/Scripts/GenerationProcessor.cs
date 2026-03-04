@@ -10,8 +10,8 @@ public class GenerationProcessor : MonoBehaviour
         {
             FileName = "python",
             Arguments = args,
-            WorkingDirectory = @"D:\Projects\VisualContentGenAR\Python",
-            //WorkingDirectory = @"C:\Projekte\VisualContentGenAR\Python",
+            //WorkingDirectory = @"D:\Projects\VisualContentGenAR\Python",
+            WorkingDirectory = @"C:\Projekte\VisualContentGenAR\Python",
             UseShellExecute = false,
             RedirectStandardOutput = true,
             RedirectStandardError = true,
