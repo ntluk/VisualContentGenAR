@@ -33,7 +33,8 @@ if __name__ == "__main__":
     #set_coords["inputs"]["coordinates"] = "[{\"x\":1260.0,\"y\":600.0}]"
     set_coords["inputs"]["points_store"] = "{\"positive\":[{\"x\":" + X + ",\"y\":" + Y + "}],\"negative\":[{\"x\":0,\"y\":0}]}"
     set_coords["inputs"]["coordinates"] = "[{\"x\":" + X + ",\"y\":" + Y + "}]"
-    set_image["inputs"]["image"] = I
+    I = I.replace("\\", "/")
+    set_image["inputs"]["image"] = I    
 
 
 

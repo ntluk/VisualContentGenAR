@@ -4,6 +4,7 @@ using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
 using Unity.XR.CoreUtils;
 using UnityEngine;
+using System.IO;
 
 public class ObjectLoader : MonoBehaviour
 {
@@ -13,6 +14,22 @@ public class ObjectLoader : MonoBehaviour
     [SerializeField] 
     private GameObject leftHand;
 
+    void Start()
+    {
+        string path = @"D:\Comfy\ComfyUI_h2_1\ComfyUI\temp\3D";
+        //string path = @"C:\ComfyUI_h2_1\ComfyUI\temp\3D";
+
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+            Debug.Log("Folder created: " + path);
+        }
+        else
+        {
+            Debug.Log("Folder already exists: " + path);
+        }
+    }
+    
     public void Load3DObjectUntextured(string obj)
     {
         GameObject preview = GameObject.Find(obj);
@@ -34,7 +51,7 @@ public class ObjectLoader : MonoBehaviour
         var gltf2 = object3D2.AddComponent<GLTFast.GltfAsset>();
         //gltf2.Url = "file://D://Comfy//ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh_00001_.glb";
         gltf2.Url = "file://C://ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh_00001_.glb";
-        gltf2.Load(gltf2.Url);
+        //gltf2.Load(gltf2.Url);
         Destroy(preview);
 
         StartCoroutine(MakeGrabbable(object3D2));

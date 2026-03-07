@@ -38,12 +38,13 @@ public class GenerationManager : MonoBehaviour
     {
        // anchorSystem.OnAnchorsLoadCompleted.AddListener(GetAnchors);
     }
-
+    
     public void OnHover(string obj)
     {
         objectGenerating = obj;
         Debug.LogWarning(obj);
     }
+    
     public void setXcoordImageObject(float x)
     {
         if (!Mathf.Approximately(x, xCoordObjectInImage))
@@ -83,10 +84,9 @@ public class GenerationManager : MonoBehaviour
                     //imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
                     imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
                 else
-                    //imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\1_kI_cbCh6HYSMUqfFAHtK1Q.jpeg";
-                    imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\1_kI_cbCh6HYSMUqfFAHtK1Q.jpeg";
-
-
+                    //imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\PoM.png";
+                    imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\PoM.png";
+                    
                 genProcess.ImageToObject(xCoordObjectInImage, yCoordObjectInImage, imgPath);
                 Debug.LogWarning("img2obj");
                 
