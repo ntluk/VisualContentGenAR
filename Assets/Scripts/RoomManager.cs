@@ -53,14 +53,21 @@ public class RoomManager : MonoBehaviour
         if (!placedFrame && wallArtSpawner != null)
             if(wallArtSpawner.AnchorPrefabSpawnerObjects != null && wallArtSpawner.AnchorPrefabSpawnerObjects.Count > 0)
             {
-                defaultPainting.gameObject.transform.position = wallArtSpawner.AnchorPrefabSpawnerObjects.Values.ElementAt(0).gameObject
+                wallArtSpawner.AnchorPrefabSpawnerObjects.Values.ElementAt(0).gameObject.SetActive(true);
+                
+                /*defaultPainting.gameObject.transform.position = wallArtSpawner.AnchorPrefabSpawnerObjects.Values.ElementAt(0).gameObject
                     .transform.position;
                 defaultPainting.gameObject.transform.rotation = wallArtSpawner.AnchorPrefabSpawnerObjects.Values.ElementAt(0).gameObject
                     .transform.rotation;
+                defaultPainting.gameObject.transform.localScale = wallArtSpawner.AnchorPrefabSpawnerObjects.Values.ElementAt(0).gameObject
+                    .transform.localScale;
+                    
+                //set z? coord if IF in Wall
                 
                 defaultPainting.gameObject.SetActive(true);
-                placedFrame = true;
+                placedFrame = true;*/
             }
+        
     }
 
     private void SetupScene()

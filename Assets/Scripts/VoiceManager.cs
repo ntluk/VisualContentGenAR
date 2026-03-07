@@ -153,6 +153,8 @@ public class VoiceManager : MonoBehaviour
                 "Starting immersive audiobook mode.",
                 () => ImmersiveAudiobook("Count")
             );
+            genManager.room.defaultPainting.SetActive(false);
+            genManager.room.virtualPainting.SetActive(false);
             return;
         }
         else if (text.Contains("reading"))
@@ -161,6 +163,8 @@ public class VoiceManager : MonoBehaviour
                 "Starting immersive reading mode.",
                 () => ImmersiveReading("Count")
             );
+            genManager.room.defaultPainting.SetActive(false);
+            genManager.room.virtualPainting.SetActive(false);
             return;
         }
         

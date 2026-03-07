@@ -20,7 +20,7 @@ public class GenerationManager : MonoBehaviour
     
     private GenerationProcessor genProcess;
     private ObjectLoader objLoad;
-    private RoomManager room;
+    public RoomManager room;
     
     private string objectGenerating;
     public Material genMat;
