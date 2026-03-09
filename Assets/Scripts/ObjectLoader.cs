@@ -16,8 +16,8 @@ public class ObjectLoader : MonoBehaviour
 
     void Start()
     {
-        string path = @"D:\Comfy\ComfyUI_h2_1\ComfyUI\temp\3D";
-        //string path = @"C:\ComfyUI_h2_1\ComfyUI\temp\3D";
+        //string path = @"D:\Comfy\ComfyUI_h2_1\ComfyUI\temp\3D";
+        string path = @"C:\ComfyUI_h2_1\ComfyUI\temp\3D";
 
         if (!Directory.Exists(path))
         {
