@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Meta.WitAi.TTS.Data;
 using Meta.WitAi.TTS.Utilities;
@@ -153,8 +154,10 @@ public class VoiceManager : MonoBehaviour
                 "Starting immersive audiobook mode.",
                 () => ImmersiveAudiobook("Count")
             );
+            genManager.room.wallArtSpawner.AnchorPrefabSpawnerObjects.Values.ElementAt(0).gameObject.SetActive(false);
             genManager.room.defaultPainting.SetActive(false);
             genManager.room.virtualPainting.SetActive(false);
+            GameObject.Find("OlivenhainAnim 1").SetActive(false);
             return;
         }
         else if (text.Contains("reading"))
@@ -163,8 +166,10 @@ public class VoiceManager : MonoBehaviour
                 "Starting immersive reading mode.",
                 () => ImmersiveReading("Count")
             );
+            genManager.room.wallArtSpawner.AnchorPrefabSpawnerObjects.Values.ElementAt(0).gameObject.SetActive(false);
             genManager.room.defaultPainting.SetActive(false);
             genManager.room.virtualPainting.SetActive(false);
+            GameObject.Find("OlivenhainAnim 1").SetActive(false);
             return;
         }
         
