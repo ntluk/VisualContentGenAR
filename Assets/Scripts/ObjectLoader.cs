@@ -91,7 +91,7 @@ public class ObjectLoader : MonoBehaviour
     public void Load3DObject()
     {
         GameObject untextured = GameObject.Find("UntexObject");
-        Transform mesh = untextured.transform.Find("world/tmpoh_bewpp.ply");
+        Transform mesh = untextured.transform.GetChild(0);
         
         GameObject object3D2 = new GameObject("TexObject");
         object3D2.transform.position = mesh.transform.position;

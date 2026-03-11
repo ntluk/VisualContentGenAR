@@ -203,6 +203,12 @@ public class GenerationManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         objLoad.Load3DObject();
+
+        GameObject object3D2 = GameObject.Find("TexObject");
+        Transform model = object3D2.transform.Find("world");
+        if (model == null)
+            objLoad.Load3DObject();
+
         Debug.Log("obj loaded");
 
         yield return new WaitForSeconds(1f);
@@ -311,7 +317,7 @@ public class GenerationManager : MonoBehaviour
         //FileInfo fileLatestGlb = new DirectoryInfo("D:/Comfy/ComfyUI_h2_1/ComfyUI/output/3D").GetFiles().Where(x => Path.GetExtension(x.Name) == ".glb").OrderByDescending(f => f.LastWriteTime).First();
         
         //string path = "D:/Comfy/ComfyUI_h2_1/ComfyUI/output";
-        string path = "C:/ComfyUI_h2_1/ComfyUI/output";
+        string path = "C:/ComfyUI_h2_1/ComfyUI/output/Images";
         FileInfo fileLatestPng;
 
         // wait until one file exists

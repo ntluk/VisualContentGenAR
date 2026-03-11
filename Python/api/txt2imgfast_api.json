@@ -133,7 +133,7 @@
   },
   "27": {
     "inputs": {
-      "filename_prefix": "ComfyUI",
+      "filename_prefix": "Images\\ComfyUI",
       "images": [
         "8",
         0
