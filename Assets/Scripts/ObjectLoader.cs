@@ -110,9 +110,9 @@ public class ObjectLoader : MonoBehaviour
         //gltf2.Url = "file://D://Comfy//ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh.glb";
         gltf2.Url = "file://C://ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh.glb";
         
-        Transform model = object3D2.transform.Find("world");
-        if (model == null)
-            gltf2.Load(gltf2.Url);
+        //Transform model = object3D2.transform.Find("world");
+        //if (model == null)
+            //gltf2.Load(gltf2.Url);
         
         Destroy(untextured);
         
