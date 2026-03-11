@@ -604,7 +604,7 @@
       "save_metadata": true,
       "trim_to_audio": false,
       "pingpong": false,
-      "save_output": true,
+      "save_output": false,
       "images": [
         "133",
         0
