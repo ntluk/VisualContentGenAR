@@ -271,7 +271,7 @@
         1
       ],
       "control_net": [
-        "22",
+        "43",
         0
       ],
       "image": [
@@ -287,15 +287,6 @@
   "21": {
     "inputs": {
       "cnet": "1.5\\control_v11f1e_sd15_tile_fp16.safetensors"
-    },
-    "class_type": "ACN_ControlNetLoaderAdvanced",
-    "_meta": {
-      "title": "Load Advanced ControlNet Model 🛂🅐🅒🅝"
-    }
-  },
-  "22": {
-    "inputs": {
-      "cnet": "SD1.5\\animatediff\\v3_sd15_sparsectrl_scribble.ckpt"
     },
     "class_type": "ACN_ControlNetLoaderAdvanced",
     "_meta": {
@@ -548,6 +539,22 @@
     "class_type": "VHS_VideoCombine",
     "_meta": {
       "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "43": {
+    "inputs": {
+      "sparsectrl_name": "SD1.5\\animatediff\\v3_sd15_sparsectrl_scribble.ckpt",
+      "use_motion": true,
+      "motion_strength": 1,
+      "motion_scale": 1,
+      "context_aware": "nearest_hint",
+      "sparse_hint_mult": 1,
+      "sparse_nonhint_mult": 1,
+      "sparse_mask_mult": 1
+    },
+    "class_type": "ACN_SparseCtrlLoaderAdvanced",
+    "_meta": {
+      "title": "Load SparseCtrl Model 🛂🅐🅒🅝"
     }
   }
 }
