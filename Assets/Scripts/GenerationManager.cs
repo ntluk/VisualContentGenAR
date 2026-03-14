@@ -84,8 +84,8 @@ public class GenerationManager : MonoBehaviour
                     //imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
                     imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
                 else
-                    //imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\PoM.png";
-                    imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\PoM.png";
+                    //imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\PoM.jpg";
+                    imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\PoM.jpg";
                     
                 genProcess.ImageToObject(xCoordObjectInImage, yCoordObjectInImage, imgPath);
                 Debug.LogWarning("img2obj");
