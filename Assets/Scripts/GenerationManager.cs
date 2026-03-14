@@ -34,6 +34,9 @@ public class GenerationManager : MonoBehaviour
         genProcess = GetComponent<GenerationProcessor>();
         objLoad = GetComponent<ObjectLoader>();
         room = GetComponent<RoomManager>();
+        
+        //currentImagePath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
+        currentImagePath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\Still-Life-of-Fruit-Emilie-Preyer-oil-painting.jpeg";
     }
     
     private void OnEnable()
