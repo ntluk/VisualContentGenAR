@@ -138,8 +138,8 @@ public class GenerationManager : MonoBehaviour
         
         if (type == 0)
         {
-            imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\PoM.jpg";
-            //imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\PoM.jpg";
+            //imgPath = "D:\\Projects\\VisualContentGenAR\\Assets\\Textures\\PoM.jpg";
+            imgPath = "C:\\Projekte\\VisualContentGenAR\\Assets\\Textures\\PoM.jpg";
             image = room.defaultPainting;
         }
         else if (type == 1)
@@ -163,7 +163,9 @@ public class GenerationManager : MonoBehaviour
         //imgPath = Path.GetFullPath(AssetDatabase.GetAssetPath(tex));
         //imgPath = currentImagePath;
         Debug.LogWarning(imgPath);
-        
+
+        if (!renderer.enabled)
+            renderer.enabled = true;
         renderer.material = genMat;
         
         genProcess.AnimateImage(imgPath);

@@ -184,7 +184,7 @@ public class VoiceManager : MonoBehaviour
             return;
         }
         
-        if (text.Contains("animate") || text.Contains("any mate") || text.Contains("any made")) 
+        if (text.Contains("animate") || text.Contains("anime") || text.Contains("any mate") || text.Contains("any made")) 
         {
             if (text.Contains("virtual"))
             {
