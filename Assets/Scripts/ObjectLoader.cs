@@ -52,13 +52,27 @@ public class ObjectLoader : MonoBehaviour
         //gltf2.Url = "file://D://Comfy//ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh_00001_.glb";
         gltf2.Url = "file://C://ComfyUI_h2_1//ComfyUI//output//3D//Hy21_Mesh_00001_.glb";
         
-        Transform model = object3D2.transform.Find("world");
-        if (model == null)
-            gltf2.Load(gltf2.Url);
+        //Transform model = object3D2.transform.Find("world");
+        //if (model == null)
+        //    gltf2.Load(gltf2.Url);
         
         Destroy(preview);
 
-        StartCoroutine(MakeGrabbable(object3D2));
+        StartCoroutine(LoadModel(gltf2, object3D2));
+    }
+
+    private IEnumerator LoadModel(GLTFast.GltfAsset gltf, GameObject parent)
+    {
+        Transform model = parent.transform.Find("world");
+
+        if (model == null)
+        {
+            var loadTask = gltf.Load(gltf.Url);
+
+            yield return new WaitUntil(() => loadTask.IsCompleted);
+        }
+
+        StartCoroutine(MakeGrabbable(parent));  
     }
 
     private IEnumerator MakeGrabbable(GameObject obj)
@@ -115,8 +129,8 @@ public class ObjectLoader : MonoBehaviour
             //gltf2.Load(gltf2.Url);
         
         Destroy(untextured);
-        
-        StartCoroutine(MakeGrabbable(object3D2));
+
+        StartCoroutine(LoadModel(gltf2, object3D2));
     }
 
     public void Load3DMesh()
